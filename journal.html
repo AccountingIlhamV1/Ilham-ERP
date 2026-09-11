@@ -241,10 +241,24 @@
 // AMBIL DATA TRANSAKSI
 // ==========================================
 
-let transactions =
+const ACTIVE_BUSINESS_KEY = "ilhamERP_activeBusiness";
+const TRANSACTION_KEY = "ilhamERP_transactions";
+
+const activeBusinessId =
+    localStorage.getItem(ACTIVE_BUSINESS_KEY);
+
+const allTransactions =
     JSON.parse(
-        localStorage.getItem("ilhamERP_transactions")
+        localStorage.getItem(TRANSACTION_KEY)
     ) || [];
+
+const transactions = activeBusinessId
+    ? allTransactions.filter(
+        transaction =>
+            String(transaction.businessId) ===
+            String(activeBusinessId)
+      )
+    : [];
 
 
 // ==========================================
