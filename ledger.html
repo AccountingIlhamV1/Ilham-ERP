@@ -149,9 +149,8 @@
 const ACCOUNT_KEY = "ilhamERP_accounts";
 const TRANSACTION_KEY = "ilhamERP_transactions";
 
-const activeBusiness = JSON.parse(
-  localStorage.getItem(ACTIVE_BUSINESS_KEY)
-);
+const activeBusinessId =
+  localStorage.getItem(ACTIVE_BUSINESS_KEY);
 
 const allAccounts = JSON.parse(
   localStorage.getItem(ACCOUNT_KEY)
@@ -161,19 +160,19 @@ const allTransactions = JSON.parse(
   localStorage.getItem(TRANSACTION_KEY)
 ) || [];
 
-const accounts = activeBusiness
+const accounts = activeBusinessId
   ? allAccounts.filter(
       account =>
         String(account.businessId) ===
-        String(activeBusiness.id)
+        String(activeBusinessId)
     )
   : [];
 
-const transactions = activeBusiness
+const transactions = activeBusinessId
   ? allTransactions.filter(
       transaction =>
         String(transaction.businessId) ===
-        String(activeBusiness.id)
+        String(activeBusinessId)
     )
   : [];
 
@@ -383,7 +382,7 @@ const transactions = activeBusiness
 
             <div class="account-code">
               Kode: ${account.code}
-              • ${account.type}
+              • ${account.group}
               • Normal: ${account.normalBalance}
             </div>
 
