@@ -796,27 +796,30 @@
 
 
   // ==========================================
-  // COA USAHA AKTIF
-  // ==========================================
+// COA USAHA AKTIF
+// ==========================================
 
-  function getActiveAccounts() {
+function getActiveAccounts() {
 
-    const business =
-      getActiveBusiness();
+  const business =
+    getActiveBusiness();
 
-    if (!business) {
-      return [];
-    }
+  const allAccounts =
+    getAccounts();
 
-
-    return getAccounts().filter(
-      account =>
-        String(account.businessId) ===
-        String(business.id)
-    );
-
+  // Jika usaha aktif belum terbaca,
+  // sementara gunakan semua COA
+  if (!business) {
+    return allAccounts;
   }
 
+  return allAccounts.filter(
+    account =>
+      String(account.businessId) ===
+      String(business.id)
+  );
+
+}
 
   // ==========================================
   // TRANSAKSI USAHA AKTIF
