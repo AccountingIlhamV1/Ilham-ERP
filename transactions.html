@@ -534,6 +534,8 @@
             <th>No</th>
 
             <th>Tanggal</th>
+            
+            <th>Invoice/Referensi</th>
 
             <th>Keterangan</th>
 
@@ -775,54 +777,6 @@
       TRANSACTION_KEY,
       JSON.stringify(data)
     );
-
-  }
-
-
-  // ==========================================
-  // MIGRASI TRANSAKSI LAMA
-  // ==========================================
-
-  function migrateOldTransactions() {
-
-    const business =
-      getActiveBusiness();
-
-    if (!business) {
-      return;
-    }
-
-
-    const transactions =
-      getTransactions();
-
-
-    let changed = false;
-
-
-    transactions.forEach(
-      transaction => {
-
-        if (!transaction.businessId) {
-
-          transaction.businessId =
-            business.id;
-
-          changed = true;
-
-        }
-
-      }
-    );
-
-
-    if (changed) {
-
-      saveTransactions(
-        transactions
-      );
-
-    }
 
   }
 
