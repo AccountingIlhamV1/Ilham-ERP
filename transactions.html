@@ -1472,3 +1472,470 @@
 
 }
 );
+
+
+  // ==========================================
+  // RESET FORM
+  // ==========================================
+
+  function resetForm() {
+
+    document.getElementById(
+      "transactionForm"
+    ).reset();
+
+    editingId = null;
+
+    const saveButton =
+      document.getElementById(
+        "saveButton"
+      );
+
+    const cancelButton =
+      document.getElementById(
+        "cancelButton"
+      );
+
+    const formTitle =
+      document.getElementById(
+        "formTitle"
+      );
+
+
+    if (formTitle) {
+      formTitle.textContent =
+        "➕ Input Transaksi";
+    }
+
+
+    if (saveButton) {
+      saveButton.textContent =
+        "Simpan Transaksi";
+    }
+
+
+    if (cancelButton) {
+      cancelButton.style.display =
+        "none";
+    }
+
+
+    updatePreview();
+
+  }
+
+
+  // ==========================================
+  // RENDER RIWAYAT TRANSAKSI
+  // ==========================================
+
+  function renderTransactions() {
+
+    const table =
+      document.getElementById(
+        "transactionTable"
+      );
+
+
+    if (!table) {
+      console.error(
+        "Elemen transactionTable tidak ditemukan."
+      );
+
+      return;
+    }
+
+
+    table.innerHTML = "";
+
+
+    const transactions =
+      getActiveTransactions()
+        .sort(
+          (a, b) =>
+            String(a.date || "")
+              .localeCompare(
+                String(b.date || "")
+              )
+        );
+
+
+    if (transactions.length === 0) {
+
+      table.innerHTML = `
+        <tr>
+          <td colspan="8">
+            Belum ada transaksi untuk usaha aktif.
+          </td>
+        </tr>
+      `;
+
+      return;
+
+    }
+
+
+    transactions.forEach(
+      (transaction, index) => {
+
+        const row =
+          document.createElement(
+            "tr"
+          );
+
+
+        row.innerHTML = `
+
+          <td>
+            ${index + 1}
+          </td>
+
+          <td>
+            ${formatDate(
+              transaction.date
+            )}
+          </td>
+
+          <td>
+            ${transaction.invoice || "-"}
+          </td>
+
+          <td>
+            ${transaction.description || "-"}
+          </td>
+
+          <td>
+            ${transaction.debitCode || "-"}
+            <br>
+            <small>
+              ${transaction.debitName || ""}
+            </small>
+          </td>
+
+          <td>
+            ${transaction.creditCode || "-"}
+            <br>
+            <small>
+              ${transaction.creditName || ""}
+            </small>
+          </td>
+
+          <td>
+            ${formatRupiah(
+              transaction.amount
+            )}
+          </td>
+
+          <td>
+
+            <button
+              type="button"
+              onclick="editTransaction('${transaction.id}')"
+            >
+              Edit
+            </button>
+
+            <button
+              type="button"
+              onclick="deleteTransaction('${transaction.id}')"
+            >
+              Hapus
+            </button>
+
+          </td>
+
+        `;
+
+
+        table.appendChild(
+          row
+        );
+
+      }
+    );
+
+  }
+
+
+  // ==========================================
+  // EDIT TRANSAKSI
+  // ==========================================
+
+  function editTransaction(id) {
+
+    const business =
+      getActiveBusiness();
+
+
+    if (!business) {
+
+      alert(
+        "Buat atau pilih usaha terlebih dahulu."
+      );
+
+      return;
+
+    }
+
+
+    const transactions =
+      getTransactions();
+
+
+    const transaction =
+      transactions.find(
+        item =>
+          String(item.id) ===
+          String(id)
+      );
+
+
+    if (!transaction) {
+
+      alert(
+        "Transaksi tidak ditemukan."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      String(transaction.businessId) !==
+      String(business.id)
+    ) {
+
+      alert(
+        "Transaksi tersebut bukan milik usaha aktif."
+      );
+
+      return;
+
+    }
+
+
+    editingId =
+      transaction.id;
+
+
+    document.getElementById(
+      "transactionDate"
+    ).value =
+      transaction.date || "";
+
+
+    const invoiceInput =
+      document.getElementById(
+        "invoice"
+      );
+
+
+    if (invoiceInput) {
+
+      invoiceInput.value =
+        transaction.invoice || "";
+
+    }
+
+
+    document.getElementById(
+      "description"
+    ).value =
+      transaction.description || "";
+
+
+    document.getElementById(
+      "amount"
+    ).value =
+      transaction.amount || "";
+
+
+    document.getElementById(
+      "debitAccount"
+    ).value =
+      transaction.debitCode || "";
+
+
+    document.getElementById(
+      "creditAccount"
+    ).value =
+      transaction.creditCode || "";
+
+
+    const formTitle =
+      document.getElementById(
+        "formTitle"
+      );
+
+
+    const saveButton =
+      document.getElementById(
+        "saveButton"
+      );
+
+
+    const cancelButton =
+      document.getElementById(
+        "cancelButton"
+      );
+
+
+    if (formTitle) {
+
+      formTitle.textContent =
+        "✏️ Edit Transaksi";
+
+    }
+
+
+    if (saveButton) {
+
+      saveButton.textContent =
+        "Update Transaksi";
+
+    }
+
+
+    if (cancelButton) {
+
+      cancelButton.style.display =
+        "inline-block";
+
+    }
+
+
+    updatePreview();
+
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
+
+
+  // ==========================================
+  // HAPUS TRANSAKSI
+  // ==========================================
+
+  function deleteTransaction(id) {
+
+    const business =
+      getActiveBusiness();
+
+
+    if (!business) {
+      return;
+    }
+
+
+    const transactions =
+      getTransactions();
+
+
+    const index =
+      transactions.findIndex(
+        transaction =>
+          String(transaction.id) ===
+          String(id)
+      );
+
+
+    if (index === -1) {
+
+      alert(
+        "Transaksi tidak ditemukan."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      String(
+        transactions[index].businessId
+      ) !==
+      String(business.id)
+    ) {
+
+      alert(
+        "Transaksi tersebut bukan milik usaha aktif."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      !confirm(
+        "Yakin ingin menghapus transaksi ini?"
+      )
+    ) {
+
+      return;
+
+    }
+
+
+    transactions.splice(
+      index,
+      1
+    );
+
+
+    saveTransactions(
+      transactions
+    );
+
+
+    if (
+      editingId !== null &&
+      String(editingId) ===
+      String(id)
+    ) {
+
+      resetForm();
+
+    }
+
+
+    renderTransactions();
+
+  }
+
+
+  // ==========================================
+  // TOMBOL BATAL EDIT
+  // ==========================================
+
+  const cancelButton =
+    document.getElementById(
+      "cancelButton"
+    );
+
+
+  if (cancelButton) {
+
+    cancelButton.addEventListener(
+      "click",
+      resetForm
+    );
+
+  }
+
+
+  // ==========================================
+  // INISIALISASI
+  // ==========================================
+
+  renderActiveBusiness();
+
+  loadAccounts();
+
+  renderTransactions();
+
+  updatePreview();  
