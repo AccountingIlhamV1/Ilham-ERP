@@ -7,29 +7,28 @@
   <title>Ilham ERP</title>
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      margin: 0;
-      padding: 20px;
-      color: #222;
+
+    * {
+      box-sizing: border-box;
     }
 
-    .container {
-      max-width: 900px;
-      margin: auto;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
     }
 
     header {
       background: #222;
       color: white;
-      padding: 25px;
-      border-radius: 15px;
-      margin-bottom: 20px;
+      padding: 30px 20px;
+      text-align: center;
     }
 
     header h1 {
-      margin: 0 0 8px;
+      margin: 0 0 10px;
+      font-size: 30px;
     }
 
     header p {
@@ -37,234 +36,623 @@
       color: #ddd;
     }
 
+    .container {
+      max-width: 1100px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
+
+    .business-status {
+      background: white;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 25px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+      border-left: 5px solid #16a34a;
+    }
+
+    .business-status strong {
+      color: #166534;
+    }
+
+    .business-status span {
+      display: block;
+      margin-top: 7px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
     }
 
     .card {
       background: white;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 220px;
     }
 
-    .icon {
-      font-size: 32px;
+    .card-icon {
+      font-size: 38px;
       margin-bottom: 10px;
     }
 
     .card h2 {
       margin: 5px 0 10px;
-      font-size: 20px;
+      font-size: 22px;
     }
 
     .card p {
       color: #666;
       line-height: 1.5;
+      flex-grow: 1;
     }
 
-    .button {
+    .btn {
       display: inline-block;
-      margin-top: 10px;
-      padding: 10px 16px;
+      text-align: center;
+      text-decoration: none;
       background: #222;
       color: white;
-      text-decoration: none;
+      padding: 12px 18px;
       border-radius: 8px;
       font-weight: bold;
+      margin-top: 15px;
     }
 
-    .button:hover {
+    .btn:hover {
       opacity: 0.85;
     }
 
     .coming {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 16px;
-      background: #ddd;
+      background: #e5e7eb;
       color: #777;
-      border-radius: 8px;
-      font-weight: bold;
+      cursor: default;
     }
 
-    .active {
-      border: 2px solid #222;
+    .section-title {
+      margin: 30px 0 15px;
+      font-size: 22px;
     }
+
+    footer {
+      text-align: center;
+      color: #777;
+      padding: 30px 15px;
+    }
+
+    @media (max-width: 700px) {
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      header h1 {
+        font-size: 25px;
+      }
+
+    }
+
   </style>
 </head>
 
 <body>
 
-<div class="container">
+  <!-- HEADER -->
 
   <header>
+
     <h1>📊 Ilham ERP</h1>
+
     <p>Accounting Learning System</p>
+
     <p>Target: Intermediate Accounting</p>
+
   </header>
 
 
-  <div class="grid">
-
-    <!-- CHART OF ACCOUNTS -->
-    <div class="card active">
-      <div class="icon">📋</div>
-
-      <h2>Chart of Accounts</h2>
-
-      <p>
-        Kelola daftar akun perusahaan seperti kas,
-        piutang, persediaan, aset tetap, utang,
-        modal, pendapatan, dan beban.
-      </p>
-
-      <a href="accounts.html" class="button">
-        MULAI
-      </a>
-    </div>
+  <div class="container">
 
 
-    <!-- TRANSAKSI -->
-    <div class="card active">
-      <div class="icon">🧾</div>
+    <!-- USAHA AKTIF -->
 
-      <h2>Transaksi</h2>
+    <div class="business-status">
 
-      <p>
-        Input transaksi perusahaan dan tentukan
-        akun debit serta kredit.
-      </p>
+      <strong>🏢 Usaha Aktif</strong>
 
-      <a href="transactions.html" class="button">
-        BUKA
-      </a>
-    </div>
-
-
-    <!-- JURNAL UMUM -->
-    <div class="card active">
-      <div class="icon">📖</div>
-
-      <h2>Jurnal Umum</h2>
-
-      <p>
-        Sistem menghasilkan jurnal umum
-        berdasarkan transaksi yang telah dimasukkan.
-      </p>
-
-      <a href="journal.html" class="button">
-        BUKA
-      </a>
-    </div>
-
-
-    <!-- BUKU BESAR -->
-    <div class="card active">
-      <div class="icon">📚</div>
-
-      <h2>Buku Besar</h2>
-
-      <p>
-        Menampilkan mutasi setiap akun,
-        total debit, kredit, dan saldo akun.
-      </p>
-
-      <a href="ledger.html" class="button">
-        BUKA
-      </a>
-    </div>
-
-
-    <!-- NERACA SALDO -->
-    <div class="card">
-      <div class="icon">⚖️</div>
-
-      <h2>Neraca Saldo</h2>
-
-      <p>
-        Menampilkan saldo seluruh akun dan
-        memeriksa keseimbangan debit dan kredit.
-      </p>
-
-      <span class="coming">
-        SEGERA
+      <span id="activeBusiness">
+        Belum ada usaha dipilih
       </span>
+
     </div>
 
 
-    <!-- PENYESUAIAN -->
-    <div class="card">
-      <div class="icon">📝</div>
+    <!-- MASTER DATA -->
 
-      <h2>Jurnal Penyesuaian</h2>
+    <h2 class="section-title">
+      Master Data
+    </h2>
 
-      <p>
-        Input dan proses jurnal penyesuaian
-        pada akhir periode.
-      </p>
 
-      <span class="coming">
-        SEGERA
-      </span>
+    <div class="grid">
+
+
+      <!-- DATA USAHA -->
+
+      <div class="card">
+
+        <div>
+
+          <div class="card-icon">
+            🏢
+          </div>
+
+          <h2>
+            Data Usaha
+          </h2>
+
+          <p>
+            Kelola data perusahaan, alamat,
+            periode atau tahun buku, serta
+            pilih usaha yang sedang aktif.
+          </p>
+
+        </div>
+
+        <a
+          href="business.html"
+          class="btn"
+        >
+          BUKA
+        </a>
+
+      </div>
+
+
+      <!-- COA -->
+
+      <div class="card">
+
+        <div>
+
+          <div class="card-icon">
+            📋
+          </div>
+
+          <h2>
+            Chart of Accounts
+          </h2>
+
+          <p>
+            Kelola daftar akun perusahaan
+            seperti kas, piutang, persediaan,
+            aset tetap, utang, modal,
+            pendapatan, dan beban.
+          </p>
+
+        </div>
+
+        <a
+          href="accounts.html"
+          class="btn"
+        >
+          MULAI
+        </a>
+
+      </div>
+
+
+      <!-- TRANSAKSI -->
+
+      <div class="card">
+
+        <div>
+
+          <div class="card-icon">
+            🧾
+          </div>
+
+          <h2>
+            Transaksi
+          </h2>
+
+          <p>
+            Input transaksi perusahaan
+            dan tentukan akun debit
+            serta kredit.
+          </p>
+
+        </div>
+
+        <a
+          href="transactions.html"
+          class="btn"
+        >
+          BUKA
+        </a>
+
+      </div>
+
+
     </div>
 
 
-    <!-- LAPORAN KEUANGAN -->
-    <div class="card">
-      <div class="icon">📊</div>
+    <!-- SIKLUS AKUNTANSI -->
 
-      <h2>Laporan Keuangan</h2>
+    <h2 class="section-title">
+      Siklus Akuntansi
+    </h2>
 
-      <p>
-        Menghasilkan laporan laba rugi,
-        perubahan ekuitas, dan posisi keuangan.
-      </p>
 
-      <span class="coming">
-        SEGERA
-      </span>
+    <div class="grid">
+
+
+      <!-- JURNAL -->
+
+      <div class="card">
+
+        <div>
+
+          <div class="card-icon">
+            📖
+          </div>
+
+          <h2>
+            Jurnal Umum
+          </h2>
+
+          <p>
+            Sistem menghasilkan jurnal umum
+            berdasarkan transaksi yang
+            telah dimasukkan.
+          </p>
+
+        </div>
+
+        <a
+          href="journal.html"
+          class="btn"
+        >
+          BUKA
+        </a>
+
+      </div>
+
+
+      <!-- LEDGER -->
+
+      <div class="card">
+
+        <div>
+
+          <div class="card-icon">
+            📚
+          </div>
+
+          <h2>
+            Buku Besar
+          </h2>
+
+          <p>
+            Menampilkan mutasi setiap akun,
+            total debit, kredit,
+            dan saldo akun.
+          </p>
+
+        </div>
+
+        <a
+          href="ledger.html"
+          class="btn"
+        >
+          BUKA
+        </a>
+
+      </div>
+
+
+      <!-- NERACA SALDO -->
+
+      <div class="card">
+
+        <div>
+
+          <div class="card-icon">
+            🧮
+          </div>
+
+          <h2>
+            Neraca Saldo
+          </h2>
+
+          <p>
+            Menampilkan saldo seluruh akun
+            dan memastikan total debit
+            sama dengan total kredit.
+          </p>
+
+        </div>
+
+        <a
+          href="trial-balance.html"
+          class="btn coming"
+        >
+          SEGERA
+        </a>
+
+      </div>
+
+
+      <!-- JURNAL PENYESUAIAN -->
+
+      <div class="card">
+
+        <div>
+
+          <div class="card-icon">
+            🔧
+          </div>
+
+          <h2>
+            Jurnal Penyesuaian
+          </h2>
+
+          <p>
+            Mencatat penyesuaian akhir periode
+            seperti penyusutan, beban yang masih
+            harus dibayar, dan pendapatan diterima.
+          </p>
+
+        </div>
+
+        <a
+          href="adjustments.html"
+          class="btn coming"
+        >
+          SEGERA
+        </a>
+
+      </div>
+
+
+      <!-- LAPORAN KEUANGAN -->
+
+      <div class="card">
+
+        <div>
+
+          <div class="card-icon">
+            📊
+          </div>
+
+          <h2>
+            Laporan Keuangan
+          </h2>
+
+          <p>
+            Menghasilkan laporan laba rugi,
+            posisi keuangan, dan perubahan
+            ekuitas.
+          </p>
+
+        </div>
+
+        <a
+          href="financial-statements.html"
+          class="btn coming"
+        >
+          SEGERA
+        </a>
+
+      </div>
+
+
+      <!-- ARUS KAS -->
+
+      <div class="card">
+
+        <div>
+
+          <div class="card-icon">
+            💰
+          </div>
+
+          <h2>
+            Laporan Arus Kas
+          </h2>
+
+          <p>
+            Menampilkan arus kas dari aktivitas
+            operasi, investasi, dan pendanaan.
+          </p>
+
+        </div>
+
+        <a
+          href="cashflow.html"
+          class="btn coming"
+        >
+          SEGERA
+        </a>
+
+      </div>
+
+
     </div>
 
 
-    <!-- PSAK 115 -->
-    <div class="card">
-      <div class="icon">📘</div>
+    <!-- MODUL KHUSUS -->
 
-      <h2>PSAK 115</h2>
+    <h2 class="section-title">
+      Modul Khusus
+    </h2>
 
-      <p>
-        Modul pendapatan dari kontrak dengan
-        pelanggan berdasarkan model 5 langkah.
-      </p>
 
-      <span class="coming">
-        SEGERA
-      </span>
+    <div class="grid">
+
+
+      <!-- PSAK 115 -->
+
+      <div class="card">
+
+        <div>
+
+          <div class="card-icon">
+            📑
+          </div>
+
+          <h2>
+            PSAK 115
+          </h2>
+
+          <p>
+            Modul pembelajaran pendapatan
+            dari kontrak dengan pelanggan,
+            termasuk identifikasi kontrak,
+            kewajiban pelaksanaan,
+            dan pengakuan pendapatan.
+          </p>
+
+        </div>
+
+        <a
+          href="psak115.html"
+          class="btn coming"
+        >
+          SEGERA
+        </a>
+
+      </div>
+
+
+      <!-- EXPORT EXCEL -->
+
+      <div class="card">
+
+        <div>
+
+          <div class="card-icon">
+            📥
+          </div>
+
+          <h2>
+            Export Excel
+          </h2>
+
+          <p>
+            Export data akuntansi dan laporan
+            keuangan ke dalam format Excel.
+          </p>
+
+        </div>
+
+        <a
+          href="excel.html"
+          class="btn coming"
+        >
+          SEGERA
+        </a>
+
+      </div>
+
+
     </div>
 
-
-    <!-- EXCEL -->
-    <div class="card">
-      <div class="icon">📗</div>
-
-      <h2>Excel Export</h2>
-
-      <p>
-        Export data transaksi, jurnal,
-        buku besar, dan laporan ke Excel.
-      </p>
-
-      <span class="coming">
-        SEGERA
-      </span>
-    </div>
 
   </div>
 
-</div>
+
+  <footer>
+
+    Ilham ERP — Accounting Learning System
+
+  </footer>
+
+
+  <script>
+
+    const ACTIVE_KEY =
+      "ilhamERP_activeBusiness";
+
+    const BUSINESS_KEY =
+      "ilhamERP_businesses";
+
+
+    function loadActiveBusiness() {
+
+      const activeId =
+        localStorage.getItem(ACTIVE_KEY);
+
+      const element =
+        document.getElementById("activeBusiness");
+
+
+      if (!activeId) {
+
+        element.textContent =
+          "Belum ada usaha dipilih";
+
+        return;
+
+      }
+
+
+      try {
+
+        const data =
+          localStorage.getItem(BUSINESS_KEY);
+
+        const businesses =
+          data ? JSON.parse(data) : [];
+
+
+        const business =
+          businesses.find(
+            item =>
+              String(item.id) ===
+              String(activeId)
+          );
+
+
+        if (business) {
+
+          element.textContent =
+            business.name +
+            " — Tahun Buku " +
+            business.period;
+
+        } else {
+
+          element.textContent =
+            "Belum ada usaha dipilih";
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          "Gagal membaca data usaha:",
+          error
+        );
+
+        element.textContent =
+          "Belum ada usaha dipilih";
+
+      }
+
+    }
+
+
+    loadActiveBusiness();
+
+  </script>
 
 </body>
-    </html>
+        </html>
