@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jurnal Umum - Ilham ERP</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #1f2937;
+        }
+
+        .header {
+            background: #111827;
+            color: white;
+            padding: 22px 20px;
+        }
+
+        .container {
+            width: 94%;
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .header p {
+            margin: 7px 0 0;
+            color: #d1d5db;
+        }
+
+        .back {
+            display: inline-block;
+            margin: 25px 0 15px;
+            color: #374151;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .info {
+            background: #eff6ff;
+            padding: 15px;
+            border-radius: 10px;
+            color: #1e40af;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        th {
+            background: #f3f4f6;
+        }
+
+        .debit {
+            color: #166534;
+            font-weight: bold;
+        }
+
+        .credit {
+            color: #1d4ed8;
+            font-weight: bold;
+        }
+
+        .credit-account {
+            padding-left: 35px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #6b7280;
+        }
+
+        .total-row {
+            font-weight: bold;
+            background: #f9fafb;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .summary-box {
+            background: #f9fafb;
+            padding: 18px;
+            border-radius: 12px;
+        }
+
+        .summary-box span {
+            display: block;
+            color: #6b7280;
+            margin-bottom: 7px;
+        }
+
+        .summary-box strong {
+            font-size: 20px;
+        }
+
+        @media (max-width: 650px) {
+            .summary {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="container">
+            <h1>📖 Jurnal Umum</h1>
+            <p>Ilham ERP — Accounting Learning System</p>
+        </div>
+    </div>
+
+
+    <div class="container">
+
+        <a href="index.html" class="back">
+            ← Kembali ke Dashboard
+        </a>
+
+
+        <div class="card">
+
+            <h2>Jurnal Umum</h2>
+
+            <div class="info">
+                Jurnal ini dibuat secara otomatis berdasarkan
+                transaksi yang telah dimasukkan pada menu
+                <strong>Transaksi</strong>.
+            </div>
+
+
+            <div class="summary">
+
+                <div class="summary-box">
+                    <span>Total Debit</span>
+                    <strong id="totalDebit">
+                        Rp0
+                    </strong>
+                </div>
+
+                <div class="summary-box">
+                    <span>Total Kredit</span>
+                    <strong id="totalCredit">
+                        Rp0
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Tanggal</th>
+                            <th>Keterangan</th>
+                            <th>Akun</th>
+                            <th>Debit</th>
+                            <th>Kredit</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="journalTable">
+                    </tbody>
+
+                    <tfoot>
+
+                        <tr class="total-row">
+
+                            <td colspan="4">
+                                TOTAL
+                            </td>
+
+                            <td id="footerDebit">
+                                Rp0
+                            </td>
+
+                            <td id="footerCredit">
+                                Rp0
+                            </td>
+
+                        </tr>
+
+                    </tfoot>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+<script>
+
+// ==========================================
+// AMBIL DATA TRANSAKSI
+// ==========================================
+
+let transactions =
+    JSON.parse(
+        localStorage.getItem("ilhamERP_transactions")
+    ) || [];
+
+
+// ==========================================
+// FORMAT RUPIAH
+// ==========================================
+
+function rupiah(number) {
+
+    return new Intl.NumberFormat(
+        "id-ID",
+        {
+            style: "currency",
+            currency: "IDR",
+            maximumFractionDigits: 0
+        }
+    ).format(number);
+
+}
+
+
+// ==========================================
+// TAMPILKAN JURNAL
+// ==========================================
+
+function renderJournal() {
+
+    const table =
+        document.getElementById(
+            "journalTable"
+        );
+
+    table.innerHTML = "";
+
+
+    let totalDebit = 0;
+    let totalCredit = 0;
+
+
+    if (transactions.length === 0) {
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="empty"
+                >
+
+                    Belum ada transaksi.
+                    Silakan masukkan transaksi
+                    terlebih dahulu.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        updateTotals(
+            0,
+            0
+        );
+
+        return;
+    }
+
+
+    transactions.forEach(
+        function(transaction, index) {
+
+            // ==========================
+            // BARIS DEBIT
+            // ==========================
+
+            const debitRow =
+                document.createElement("tr");
+
+
+            debitRow.innerHTML = `
+
+                <td rowspan="2">
+                    ${index + 1}
+                </td>
+
+                <td rowspan="2">
+                    ${transaction.date}
+                </td>
+
+                <td rowspan="2">
+                    ${transaction.description}
+                </td>
+
+                <td class="debit">
+                    ${transaction.debitCode}
+                    -
+                    ${transaction.debitName}
+                </td>
+
+                <td class="debit">
+                    ${rupiah(transaction.amount)}
+                </td>
+
+                <td>
+                    -
+                </td>
+
+            `;
+
+
+            table.appendChild(
+                debitRow
+            );
+
+
+            // ==========================
+            // BARIS KREDIT
+            // ==========================
+
+            const creditRow =
+                document.createElement("tr");
+
+
+            creditRow.innerHTML = `
+
+                <td class="credit credit-account">
+                    ${transaction.creditCode}
+                    -
+                    ${transaction.creditName}
+                </td>
+
+                <td>
+                    -
+                </td>
+
+                <td class="credit">
+                    ${rupiah(transaction.amount)}
+                </td>
+
+            `;
+
+
+            table.appendChild(
+                creditRow
+            );
+
+
+            totalDebit +=
+                transaction.amount;
+
+
+            totalCredit +=
+                transaction.amount;
+
+        }
+    );
+
+
+    updateTotals(
+        totalDebit,
+        totalCredit
+    );
+
+}
+
+
+// ==========================================
+// UPDATE TOTAL
+// ==========================================
+
+function updateTotals(
+    totalDebit,
+    totalCredit
+) {
+
+    document.getElementById(
+        "totalDebit"
+    ).textContent =
+        rupiah(totalDebit);
+
+
+    document.getElementById(
+        "totalCredit"
+    ).textContent =
+        rupiah(totalCredit);
+
+
+    document.getElementById(
+        "footerDebit"
+    ).textContent =
+        rupiah(totalDebit);
+
+
+    document.getElementById(
+        "footerCredit"
+    ).textContent =
+        rupiah(totalCredit);
+
+}
+
+
+// ==========================================
+// LOAD
+// ==========================================
+
+renderJournal();
+
+</script>
+
+</body>
+  </html>
