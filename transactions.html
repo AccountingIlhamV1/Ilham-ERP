@@ -674,25 +674,39 @@
 
   function getActiveBusiness() {
 
-    const activeId =
-      localStorage.getItem(
-        ACTIVE_BUSINESS_KEY
-      );
+  const businesses = getBusinesses();
 
-    if (!activeId) {
-      return null;
-    }
+  if (businesses.length === 0) {
+    return null;
+  }
 
+  let activeId =
+    localStorage.getItem(
+      ACTIVE_BUSINESS_KEY
+    );
 
-    const businesses =
-      getBusinesses();
-
-
-    return businesses.find(
-      business =>
-        String(business.id) ===
+  let business =
+    businesses.find(
+      item =>
+        String(item.id) ===
         String(activeId)
-    ) || null;
+    );
+
+  // Jika belum ada usaha aktif
+  // atau ID aktif sudah tidak valid,
+  // gunakan usaha pertama.
+  if (!business) {
+
+    business = businesses[0];
+
+    localStorage.setItem(
+      ACTIVE_BUSINESS_KEY,
+      String(business.id)
+    );
+
+  }
+
+  return business;
 
   }
 
