@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neraca Saldo - Ilham ERP</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f6f8;
+      color: #222;
+    }
+
+    header {
+      background: #1f2937;
+      color: white;
+      padding: 18px 20px;
+    }
+
+    header h1 {
+      margin: 0 0 5px;
+      font-size: 22px;
+    }
+
+    header p {
+      margin: 0;
+      opacity: 0.85;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    .top-card {
+      background: white;
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .business-name {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .business-info {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .status {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 7px;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    .status.balance {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status.not-balance {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .table-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    th,
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background: #f3f4f6;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    td {
+      font-size: 14px;
+    }
+
+    .number {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    tfoot td {
+      font-weight: bold;
+      background: #f9fafb;
+      border-top: 2px solid #374151;
+    }
+
+    .empty {
+      padding: 30px;
+      text-align: center;
+      color: #666;
+    }
+
+    .actions {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button,
+    a {
+      display: inline-block;
+      border: none;
+      border-radius: 7px;
+      padding: 10px 15px;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button {
+      background: #2563eb;
+      color: white;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .back {
+      background: #6b7280;
+      color: white;
+    }
+
+    .back:hover {
+      background: #4b5563;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 20px;
+      }
+
+      .container {
+        margin-top: 12px;
+      }
+
+      .top-card {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Neraca Saldo</h1>
+  <p>Ilham ERP - Trial Balance</p>
+</header>
+
+<div class="container">
+
+  <div class="top-card">
+    <div class="business-name" id="businessName">
+      Memuat usaha...
+    </div>
+
+    <div class="business-info" id="businessInfo">
+      -
+    </div>
+
+    <div id="balanceStatus" class="status balance">
+      Memeriksa saldo...
+    </div>
+
+    <div class="actions">
+      <button onclick="renderTrialBalance()">
+        🔄 Refresh
+      </button>
+
+      <a href="index.html" class="back">
+        ← Dashboard
+      </a>
+    </div>
+  </div>
+
+  <div class="table-card">
+
+    <div class="table-wrapper">
+
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Kode Akun</th>
+            <th>Nama Akun</th>
+            <th class="number">Debit</th>
+            <th class="number">Kredit</th>
+          </tr>
+        </thead>
+
+        <tbody id="trialBalanceBody">
+          <tr>
+            <td colspan="5" class="empty">
+              Memuat data...
+            </td>
+          </tr>
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <td colspan="3">
+              TOTAL
+            </td>
+
+            <td class="number" id="totalDebit">
+              Rp 0
+            </td>
+
+            <td class="number" id="totalCredit">
+              Rp 0
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+  function getActiveBusiness() {
+    try {
+      const activeBusinessId =
+        localStorage.getItem("ilhamERP_activeBusiness");
+
+      const businesses =
+        JSON.parse(
+          localStorage.getItem("ilhamERP_businesses") || "[]"
+        );
+
+      if (!activeBusinessId) {
+        return null;
+      }
+
+      return businesses.find(
+        business =>
+          String(business.id) === String(activeBusinessId)
+      ) || null;
+
+    } catch (error) {
+      console.error("Gagal membaca usaha:", error);
+      return null;
+    }
+  }
+
+
+  function getAccounts() {
+    try {
+      return JSON.parse(
+        localStorage.getItem("ilhamERP_accounts") || "[]"
+      );
+    } catch (error) {
+      console.error("Gagal membaca akun:", error);
+      return [];
+    }
+  }
+
+
+  function getTransactions() {
+    try {
+      return JSON.parse(
+        localStorage.getItem("ilhamERP_transactions") || "[]"
+      );
+    } catch (error) {
+      console.error("Gagal membaca transaksi:", error);
+      return [];
+    }
+  }
+
+
+  function rupiah(value) {
+    const number = Number(value) || 0;
+
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0
+    }).format(number);
+  }
+
+
+  function getActiveAccounts() {
+
+    const business = getActiveBusiness();
+
+    if (!business) {
+      return [];
+    }
+
+    const accounts = getAccounts();
+
+    return accounts.filter(account => {
+
+      if (!account.businessId) {
+        return false;
+      }
+
+      return String(account.businessId) ===
+        String(business.id);
+
+    });
+  }
+
+
+  function getActiveTransactions() {
+
+    const business = getActiveBusiness();
+
+    if (!business) {
+      return [];
+    }
+
+    const transactions = getTransactions();
+
+    return transactions.filter(transaction => {
+
+      if (!transaction.businessId) {
+        return false;
+      }
+
+      return String(transaction.businessId) ===
+        String(business.id);
+
+    });
+  }
+
+
+  function renderTrialBalance() {
+
+    const business = getActiveBusiness();
+
+    const body =
+      document.getElementById("trialBalanceBody");
+
+    const totalDebit =
+      document.getElementById("totalDebit");
+
+    const totalCredit =
+      document.getElementById("totalCredit");
+
+    const status =
+      document.getElementById("balanceStatus");
+
+    const businessName =
+      document.getElementById("businessName");
+
+    const businessInfo =
+      document.getElementById("businessInfo");
+
+
+    // Tidak ada usaha aktif
+    if (!business) {
+
+      businessName.textContent =
+        "Belum ada usaha aktif";
+
+      businessInfo.textContent =
+        "Silakan pilih atau buat usaha terlebih dahulu.";
+
+      body.innerHTML = `
+        <tr>
+          <td colspan="5" class="empty">
+            Tidak ada usaha aktif.
+          </td>
+        </tr>
+      `;
+
+      totalDebit.textContent = rupiah(0);
+      totalCredit.textContent = rupiah(0);
+
+      status.className =
+        "status not-balance";
+
+      status.textContent =
+        "⚠️ Tidak ada usaha aktif";
+
+      return;
+    }
+
+
+    businessName.textContent =
+      business.name ||
+      business.nama ||
+      "Usaha Aktif";
+
+
+    businessInfo.textContent =
+      "ID Usaha: " + business.id;
+
+
+    const accounts =
+      getActiveAccounts();
+
+    const transactions =
+      getActiveTransactions();
+
+
+    if (accounts.length === 0) {
+
+      body.innerHTML = `
+        <tr>
+          <td colspan="5" class="empty">
+            Belum ada akun pada usaha ini.
+          </td>
+        </tr>
+      `;
+
+      totalDebit.textContent = rupiah(0);
+      totalCredit.textContent = rupiah(0);
+
+      status.className =
+        "status balance";
+
+      status.textContent =
+        "✓ Saldo seimbang";
+
+      return;
+    }
+
+
+    /*
+      Menyiapkan saldo setiap akun.
+    */
+
+    const balances = {};
+
+    accounts.forEach(account => {
+
+      balances[String(account.id)] = {
+        debit: 0,
+        credit: 0
+      };
+
+    });
+
+
+    /*
+      Memproses seluruh transaksi.
+    */
+
+    transactions.forEach(transaction => {
+
+      const amount =
+        Number(transaction.amount) || 0;
+
+
+      // Debit
+      if (
+        transaction.debitAccountId !== undefined &&
+        transaction.debitAccountId !== null
+      ) {
+
+        const debitId =
+          String(transaction.debitAccountId);
+
+        if (balances[debitId]) {
+
+          balances[debitId].debit += amount;
+
+        }
+
+      }
+
+
+      // Kredit
+      if (
+        transaction.creditAccountId !== undefined &&
+        transaction.creditAccountId !== null
+      ) {
+
+        const creditId =
+          String(transaction.creditAccountId);
+
+        if (balances[creditId]) {
+
+          balances[creditId].credit += amount;
+
+        }
+
+      }
+
+    });
+
+
+    let html = "";
+
+    let grandDebit = 0;
+    let grandCredit = 0;
+
+    let number = 1;
+
+
+    accounts.forEach(account => {
+
+      const id =
+        String(account.id);
+
+      const balance =
+        balances[id] || {
+          debit: 0,
+          credit: 0
+        };
+
+
+      /*
+        Dalam neraca saldo,
+        saldo akun ditampilkan sesuai
+        posisi akhirnya.
+
+        Jika Debit > Kredit:
+        tampilkan selisih di Debit.
+
+        Jika Kredit > Debit:
+        tampilkan selisih di Kredit.
+      */
+
+      const netDebit =
+        balance.debit - balance.credit;
+
+      let debitAmount = 0;
+      let creditAmount = 0;
+
+
+      if (netDebit > 0) {
+
+        debitAmount = netDebit;
+
+      } else if (netDebit < 0) {
+
+        creditAmount = Math.abs(netDebit);
+
+      }
+
+
+      grandDebit += debitAmount;
+      grandCredit += creditAmount;
+
+
+      html += `
+        <tr>
+
+          <td>
+            ${number++}
+          </td>
+
+          <td>
+            ${account.code || "-"}
+          </td>
+
+          <td>
+            ${account.name || "-"}
+          </td>
+
+          <td class="number">
+            ${rupiah(debitAmount)}
+          </td>
+
+          <td class="number">
+            ${rupiah(creditAmount)}
+          </td>
+
+        </tr>
+      `;
+
+    });
+
+
+    body.innerHTML = html;
+
+    totalDebit.textContent =
+      rupiah(grandDebit);
+
+    totalCredit.textContent =
+      rupiah(grandCredit);
+
+
+    /*
+      Mengecek apakah neraca saldo balance.
+    */
+
+    const difference =
+      Math.abs(grandDebit - grandCredit);
+
+
+    if (difference < 0.01) {
+
+      status.className =
+        "status balance";
+
+      status.textContent =
+        "✓ BALANCE — Debit dan Kredit seimbang";
+
+    } else {
+
+      status.className =
+        "status not-balance";
+
+      status.textContent =
+        "⚠️ TIDAK BALANCE — Selisih " +
+        rupiah(difference);
+
+    }
+
+  }
+
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    renderTrialBalance
+  );
+
+</script>
+
+</body>
+  </html>
