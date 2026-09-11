@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Usaha - Ilham ERP</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    header {
+      background: #1f2937;
+      color: white;
+      padding: 20px;
+    }
+
+    header h1 {
+      margin: 0 0 5px;
+      font-size: 24px;
+    }
+
+    header p {
+      margin: 0;
+      color: #d1d5db;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      margin-top: 0;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    button {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 3px;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .btn-edit {
+      background: #f59e0b;
+      color: white;
+    }
+
+    .btn-delete {
+      background: #dc2626;
+      color: white;
+    }
+
+    .btn-active {
+      background: #16a34a;
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #6b7280;
+      color: white;
+    }
+
+    .active-box {
+      background: #ecfdf5;
+      border: 1px solid #86efac;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .active-box strong {
+      color: #166534;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background: #f3f4f6;
+    }
+
+    .status-active {
+      color: #15803d;
+      font-weight: bold;
+    }
+
+    .status-normal {
+      color: #6b7280;
+    }
+
+    .empty {
+      text-align: center;
+      color: #777;
+      padding: 25px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 15px;
+      text-decoration: none;
+      color: #2563eb;
+      font-weight: bold;
+    }
+
+    .small {
+      color: #6b7280;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>🏢 Ilham ERP — Data Usaha</h1>
+  <p>Kelola usaha dan pisahkan seluruh data akuntansi</p>
+</header>
+
+<div class="container">
+
+  <a href="index.html" class="back">← Kembali ke Dashboard</a>
+
+  <!-- USAHA AKTIF -->
+  <div class="active-box">
+    <strong>Usaha Aktif:</strong>
+    <span id="activeBusiness">Belum ada usaha dipilih</span>
+  </div>
+
+  <!-- FORM -->
+  <div class="card">
+
+    <h2 id="formTitle">➕ Tambah Data Usaha</h2>
+
+    <div class="form-group">
+      <label for="businessName">Nama Usaha</label>
+      <input
+        type="text"
+        id="businessName"
+        placeholder="Contoh: PT Ilham Sejahtera"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="businessAddress">Alamat Usaha</label>
+      <input
+        type="text"
+        id="businessAddress"
+        placeholder="Contoh: Jl. Contoh No. 10"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="businessPeriod">Periode / Tahun Buku</label>
+      <input
+        type="number"
+        id="businessPeriod"
+        placeholder="Contoh: 2026"
+        min="2000"
+        max="2100"
+      >
+    </div>
+
+    <button
+      class="btn-primary"
+      id="saveButton"
+      onclick="saveBusiness()"
+    >
+      Simpan Usaha
+    </button>
+
+    <button
+      class="btn-secondary"
+      id="cancelButton"
+      onclick="cancelEdit()"
+      style="display:none;"
+    >
+      Batal Edit
+    </button>
+
+  </div>
+
+  <!-- DAFTAR USAHA -->
+  <div class="card">
+
+    <h2>📋 Daftar Usaha</h2>
+
+    <p class="small">
+      Setiap usaha nantinya memiliki COA, transaksi, jurnal, ledger,
+      dan laporan keuangan masing-masing.
+    </p>
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama Usaha</th>
+            <th>Alamat</th>
+            <th>Periode</th>
+            <th>Status</th>
+            <th>Aksi</
