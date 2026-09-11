@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jurnal Penyesuaian - Ilham ERP</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f6f8;
+      color: #222;
+    }
+
+    header {
+      background: #1f2937;
+      color: white;
+      padding: 18px 20px;
+    }
+
+    header h1 {
+      margin: 0 0 5px;
+      font-size: 22px;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.85;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .business-name {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .business-info {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 7px;
+      font-size: 14px;
+      background: white;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    button,
+    a {
+      border: none;
+      border-radius: 7px;
+      padding: 10px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .primary:hover {
+      background: #1d4ed8;
+    }
+
+    .secondary {
+      background: #6b7280;
+      color: white;
+    }
+
+    .danger {
+      background: #dc2626;
+      color: white;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 800px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 11px 12px;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 14px;
+    }
+
+    th {
+      background: #f3f4f6;
+      text-align: left;
+    }
+
+    .number {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    tfoot td {
+      font-weight: bold;
+      border-top: 2px solid #374151;
+      background: #f9fafb;
+    }
+
+    .empty {
+      text-align: center;
+      color: #666;
+      padding: 30px;
+    }
+
+    .status {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 9px 13px;
+      border-radius: 7px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .success {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .warning {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    @media (max-width: 650px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: auto;
+      }
+
+      .container {
+        margin-top: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Jurnal Penyesuaian</h1>
+  <p>Ilham ERP</p>
+</header>
+
+<div class="container">
+
+  <!-- INFORMASI USAHA -->
+  <div class="card">
+
+    <div class="business-name" id="businessName">
+      Memuat usaha...
+    </div>
+
+    <div class="business-info" id="businessInfo">
+      -
+    </div>
+
+  </div>
+
+
+  <!-- FORM -->
+  <div class="card">
+
+    <h2>Tambah Jurnal Penyesuaian</h2>
+
+    <form id="adjustmentForm">
+
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label for="adjustmentDate">
+            Tanggal
+          </label>
+
+          <input
+            type="date"
+            id="adjustmentDate"
+            required
+          >
+        </div>
+
+
+        <div class="form-group">
+          <label for="adjustmentReference">
+            Referensi
+          </label>
+
+          <input
+            type="text"
+            id="adjustmentReference"
+            placeholder="Contoh: AJP-001"
+          >
+        </div>
+
+
+        <div class="form-group">
+          <label for="debitAccount">
+            Akun Debit
+          </label>
+
+          <select
+            id="debitAccount"
+            required
+          >
+            <option value="">
+              -- Pilih Akun Debit --
+            </option>
+          </select>
+        </div>
+
+
+        <div class="form-group">
+          <label for="creditAccount">
+            Akun Kredit
+          </label>
+
+          <select
+            id="creditAccount"
+            required
+          >
+            <option value="">
+              -- Pilih Akun Kredit --
+            </option>
+          </select>
+        </div>
+
+
+        <div class="form-group">
+          <label for="amount">
+            Nominal
+          </label>
+
+          <input
+            type="number"
+            id="amount"
+            min="0"
+            step="1"
+            placeholder="0"
+            required
+          >
+        </div>
+
+
+        <div class="form-group full">
+          <label for="description">
+            Keterangan
+          </label>
+
+          <textarea
+            id="description"
+            placeholder="Contoh: Penyesuaian beban yang masih harus dibayar"
+            required
+          ></textarea>
+        </div>
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          type="submit"
+          class="primary"
+        >
+          Simpan Penyesuaian
+        </button>
+
+        <button
+          type="button"
+          class="secondary"
+          onclick="resetForm()"
+        >
+          Reset
+        </button>
+
+      </div>
+
+    </form>
+
+    <div
+      id="formStatus"
+      class="status warning"
+      style="display:none;"
+    ></div>
+
+  </div>
+
+
+  <!-- DAFTAR -->
+  <div class="card">
+
+    <h2>Daftar Jurnal Penyesuaian</h2>
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>No</th>
+            <th>Tanggal</th>
+            <th>Referensi</th>
+            <th>Akun Debit</th>
+            <th>Akun Kredit</th>
+            <th class="number">Nominal</th>
+            <th>Keterangan</th>
+            <th>Aksi</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="adjustmentBody">
+
+          <tr>
+            <td
+              colspan="8"
+              class="empty"
+            >
+              Memuat data...
+            </td>
+          </tr>
+
+        </tbody>
+
+        <tfoot>
+
+          <tr>
+
+            <td colspan="5">
+              TOTAL
+            </td>
+
+            <td
+              class="number"
+              id="totalAmount"
+            >
+              Rp 0
+            </td>
+
+            <td colspan="2"></td>
+
+          </tr>
+
+        </tfoot>
+
+      </table>
+
+    </div>
+
+  </div>
+
+
+  <div class="actions">
+
+    <a
+      href="index.html"
+      class="secondary"
+    >
+      ← Dashboard
+    </a>
+
+    <a
+      href="journal.html"
+      class="secondary"
+    >
+      Jurnal Umum
+    </a>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  /*
+   * ============================
+   * DATA USAHA
+   * ============================
+   */
+
+  function getActiveBusiness() {
+
+    try {
+
+      const activeBusinessId =
+        localStorage.getItem(
+          "ilhamERP_activeBusiness"
+        );
+
+      const businesses =
+        JSON.parse(
+          localStorage.getItem(
+            "ilhamERP_businesses"
+          ) || "[]"
+        );
+
+      if (!activeBusinessId) {
+        return null;
+      }
+
+      return businesses.find(
+        business =>
+          String(business.id) ===
+          String(activeBusinessId)
+      ) || null;
+
+    } catch (error) {
+
+      console.error(
+        "Gagal membaca usaha:",
+        error
+      );
+
+      return null;
+    }
+  }
+
+
+  /*
+   * ============================
+   * AKUN
+   * ============================
+   */
+
+  function getAccounts() {
+
+    try {
+
+      return JSON.parse(
+        localStorage.getItem(
+          "ilhamERP_accounts"
+        ) || "[]"
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Gagal membaca akun:",
+        error
+      );
+
+      return [];
+    }
+  }
+
+
+  function getActiveAccounts() {
+
+    const business =
+      getActiveBusiness();
+
+    if (!business) {
+      return [];
+    }
+
+    return getAccounts().filter(
+      account =>
+        account.businessId &&
+        String(account.businessId) ===
+        String(business.id)
+    );
+  }
+
+
+  function getAccountById(id) {
+
+    return getAccounts().find(
+      account =>
+        String(account.id) ===
+        String(id)
+    ) || null;
+  }
+
+
+  /*
+   * ============================
+   * JURNAL PENYESUAIAN
+   * ============================
+   */
+
+  function getAdjustments() {
+
+    try {
+
+      return JSON.parse(
+        localStorage.getItem(
+          "ilhamERP_adjustments"
+        ) || "[]"
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Gagal membaca jurnal penyesuaian:",
+        error
+      );
+
+      return [];
+    }
+  }
+
+
+  function saveAdjustments(data) {
+
+    localStorage.setItem(
+      "ilhamERP_adjustments",
+      JSON.stringify(data)
+    );
+  }
+
+
+  function getActiveAdjustments() {
+
+    const business =
+      getActiveBusiness();
+
+    if (!business) {
+      return [];
+    }
+
+    return getAdjustments().filter(
+      adjustment =>
+        adjustment.businessId &&
+        String(adjustment.businessId) ===
+        String(business.id)
+    );
+  }
+
+
+  /*
+   * ============================
+   * FORMAT
+   * ============================
+   */
+
+  function rupiah(value) {
+
+    return new Intl.NumberFormat(
+      "id-ID",
+      {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 0
+      }
+    ).format(
+      Number(value) || 0
+    );
+  }
+
+
+  function formatDate(dateString) {
+
+    if (!dateString) {
+      return "-";
+    }
+
+    const date =
+      new Date(dateString + "T00:00:00");
+
+    return date.toLocaleDateString(
+      "id-ID",
+      {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+      }
+    );
+  }
+
+
+  /*
+   * ============================
+   * LOAD DROPDOWN
+   * ============================
+   */
+
+  function loadAccountDropdowns() {
+
+    const debitSelect =
+      document.getElementById(
+        "debitAccount"
+      );
+
+    const creditSelect =
+      document.getElementById(
+        "creditAccount"
+      );
+
+    const accounts =
+      getActiveAccounts();
+
+
+    debitSelect.innerHTML = `
+      <option value="">
+        -- Pilih Akun Debit --
+      </option>
+    `;
+
+    creditSelect.innerHTML = `
+      <option value="">
+        -- Pilih Akun Kredit --
+      </option>
+    `;
+
+
+    accounts.forEach(account => {
+
+      const optionDebit =
+        document.createElement("option");
+
+      optionDebit.value =
+        account.id;
+
+      optionDebit.textContent =
+        `${account.code || ""} - ${account.name || ""}`;
+
+      debitSelect.appendChild(
+        optionDebit
+      );
+
+
+      const optionCredit =
+        document.createElement("option");
+
+      optionCredit.value =
+        account.id;
+
+      optionCredit.textContent =
+        `${account.code || ""} - ${account.name || ""}`;
+
+      creditSelect.appendChild(
+        optionCredit
+      );
+
+    });
+
+  }
+
+
+  /*
+   * ============================
+   * RENDER
+   * ============================
+   */
+
+  function renderAdjustments() {
+
+    const body =
+      document.getElementById(
+        "adjustmentBody"
+      );
+
+    const totalElement =
+      document.getElementById(
+        "totalAmount"
+      );
+
+
+    const adjustments =
+      getActiveAdjustments();
+
+
+    if (adjustments.length === 0) {
+
+      body.innerHTML = `
+        <tr>
+          <td
+            colspan="8"
+            class="empty"
+          >
+            Belum ada jurnal penyesuaian.
+          </td>
+        </tr>
+      `;
+
+      totalElement.textContent =
+        rupiah(0);
+
+      return;
+    }
+
+
+    let html = "";
+
+    let total = 0;
+
+
+    adjustments.forEach(
+      (adjustment, index) => {
+
+        const debit =
+          getAccountById(
+            adjustment.debitAccountId
+          );
+
+        const credit =
+          getAccountById(
+            adjustment.creditAccountId
+          );
+
+
+        const amount =
+          Number(
+            adjustment.amount
+          ) || 0;
+
+
+        total += amount;
+
+
+        html += `
+          <tr>
+
+            <td>
+              ${index + 1}
+            </td>
+
+            <td>
+              ${formatDate(
+                adjustment.date
+              )}
+            </td>
+
+            <td>
+              ${adjustment.reference || "-"}
+            </td>
+
+            <td>
+              ${
+                debit
+                  ? `${debit.code} - ${debit.name}`
+                  : "-"
+              }
+            </td>
+
+            <td>
+              ${
+                credit
+                  ? `${credit.code} - ${credit.name}`
+                  : "-"
+              }
+            </td>
+
+            <td class="number">
+              ${rupiah(amount)}
+            </td>
+
+            <td>
+              ${adjustment.description || "-"}
+            </td>
+
+            <td>
+
+              <button
+                type="button"
+                class="danger"
+                onclick="deleteAdjustment('${adjustment.id}')"
+              >
+                Hapus
+              </button>
+
+            </td>
+
+          </tr>
+        `;
+
+      }
+    );
+
+
+    body.innerHTML = html;
+
+    totalElement.textContent =
+      rupiah(total);
+
+  }
+
+
+  /*
+   * ============================
+   * SIMPAN
+   * ============================
+   */
+
+  document
+    .getElementById("adjustmentForm")
+    .addEventListener(
+      "submit",
+      function(event) {
+
+        event.preventDefault();
+
+
+        const business =
+          getActiveBusiness();
+
+
+        if (!business) {
+
+          showStatus(
+            "Tidak ada usaha aktif.",
+            false
+          );
+
+          return;
+        }
+
+
+        const date =
+          document.getElementById(
+            "adjustmentDate"
+          ).value;
+
+
+        const reference =
+          document.getElementById(
+            "adjustmentReference"
+          ).value.trim();
+
+
+        const debitAccountId =
+          document.getElementById(
+            "debitAccount"
+          ).value;
+
+
+        const creditAccountId =
+          document.getElementById(
+            "creditAccount"
+          ).value;
+
+
+        const amount =
+          Number(
+            document.getElementById(
+              "amount"
+            ).value
+          );
+
+
+        const description =
+          document.getElementById(
+            "description"
+          ).value.trim();
+
+
+        if (!date ||
+            !debitAccountId ||
+            !creditAccountId ||
+            !amount ||
+            amount <= 0 ||
+            !description) {
+
+          showStatus(
+            "Lengkapi semua data jurnal penyesuaian.",
+            false
+          );
+
+          return;
+        }
+
+
+        if (
+          String(debitAccountId) ===
+          String(creditAccountId)
+        ) {
+
+          showStatus(
+            "Akun Debit dan Kredit tidak boleh sama.",
+            false
+          );
+
+          return;
+        }
+
+
+        const adjustments =
+          getAdjustments();
+
+
+        const adjustment = {
+
+          id:
+            "adj_" +
+            Date.now() +
+            "_" +
+            Math.random()
+              .toString(36)
+              .substring(2, 8),
+
+          businessId:
+            business.id,
+
+          date:
+            date,
+
+          reference:
+            reference ||
+            "AJP-" +
+            String(
+              adjustments.length + 1
+            ).padStart(3, "0"),
+
+          debitAccountId:
+            debitAccountId,
+
+          creditAccountId:
+            creditAccountId,
+
+          amount:
+            amount,
+
+          description:
+            description,
+
+          createdAt:
+            new Date().toISOString()
+
+        };
+
+
+        adjustments.push(
+          adjustment
+        );
+
+
+        saveAdjustments(
+          adjustments
+        );
+
+
+        showStatus(
+          "Jurnal penyesuaian berhasil disimpan.",
+          true
+        );
+
+
+        resetForm();
+
+        renderAdjustments();
+
+      }
+    );
+
+
+  /*
+   * ============================
+   * HAPUS
+   * ============================
+   */
+
+  function deleteAdjustment(id) {
+
+    const yakin =
+      confirm(
+        "Yakin ingin menghapus jurnal penyesuaian ini?"
+      );
+
+
+    if (!yakin) {
+      return;
+    }
+
+
+    const adjustments =
+      getAdjustments();
+
+
+    const filtered =
+      adjustments.filter(
+        adjustment =>
+          String(adjustment.id) !==
+          String(id)
+      );
+
+
+    saveAdjustments(
+      filtered
+    );
+
+
+    renderAdjustments();
+
+
+    showStatus(
+      "Jurnal penyesuaian berhasil dihapus.",
+      true
+    );
+
+  }
+
+
+  /*
+   * ============================
+   * RESET
+   * ============================
+   */
+
+  function resetForm() {
+
+    document
+      .getElementById(
+        "adjustmentForm"
+      )
+      .reset();
+
+
+    const dateInput =
+      document.getElementById(
+        "adjustmentDate"
+      );
+
+
+    dateInput.value =
+      new Date()
+        .toISOString()
+        .split("T")[0];
+
+  }
+
+
+  /*
+   * ============================
+   * STATUS
+   * ============================
+   */
+
+  function showStatus(
+    message,
+    success
+  ) {
+
+    const element =
+      document.getElementById(
+        "formStatus"
+      );
+
+
+    element.style.display =
+      "inline-block";
+
+
+    element.className =
+      success
+        ? "status success"
+        : "status warning";
+
+
+    element.textContent =
+      message;
+
+
+    setTimeout(
+      () => {
+        element.style.display =
+          "none";
+      },
+      3000
+    );
+
+  }
+
+
+  /*
+   * ============================
+   * INFORMASI USAHA
+   * ============================
+   */
+
+  function renderBusiness() {
+
+    const business =
+      getActiveBusiness();
+
+
+    const name =
+      document.getElementById(
+        "businessName"
+      );
+
+    const info =
+      document.getElementById(
+        "businessInfo"
+      );
+
+
+    if (!business) {
+
+      name.textContent =
+        "Belum ada usaha aktif";
+
+      info.textContent =
+        "Silakan pilih usaha terlebih dahulu.";
+
+      return;
+    }
+
+
+    name.textContent =
+      business.name ||
+      business.nama ||
+      "Usaha Aktif";
+
+
+    info.textContent =
+      "ID Usaha: " +
+      business.id;
+
+  }
+
+
+  /*
+   * ============================
+   * INIT
+   * ============================
+   */
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+      renderBusiness();
+
+      loadAccountDropdowns();
+
+      resetForm();
+
+      renderAdjustments();
+
+    }
+  );
+
+</script>
+
+</body>
+  </html>
