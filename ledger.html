@@ -1,475 +1,579 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Buku Besar - Ilham ERP</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      margin: 0;
-      padding: 20px;
-      color: #222;
-    }
+<title>Buku Besar - Ilham ERP</title>
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
-    }
+<style>
 
-    h1 {
-      margin-bottom: 5px;
-    }
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+    color: #222;
+}
 
-    .subtitle {
-      color: #666;
-      margin-bottom: 25px;
-    }
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
 
-    .account-card {
-      background: white;
-      border-radius: 12px;
-      padding: 18px;
-      margin-bottom: 25px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
+h1 {
+    margin-bottom: 5px;
+}
 
-    .account-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-bottom: 15px;
-    }
+.subtitle {
+    color: #666;
+    margin-bottom: 25px;
+}
 
-    .account-name {
-      font-size: 20px;
-      font-weight: bold;
-    }
+.business-info {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
 
-    .account-code {
-      color: #777;
-      font-size: 14px;
-      margin-top: 4px;
-    }
+.account-card {
+    background: white;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
 
-    .balance {
-      font-size: 18px;
-      font-weight: bold;
-    }
+.account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
 
-    .debit {
-      color: #1b5e20;
-    }
+.account-name {
+    font-size: 20px;
+    font-weight: bold;
+}
 
-    .credit {
-      color: #b71c1c;
-    }
+.account-code {
+    color: #777;
+    font-size: 14px;
+    margin-top: 4px;
+}
 
-    .table-wrapper {
-      overflow-x: auto;
-    }
+.balance {
+    font-size: 18px;
+    font-weight: bold;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 650px;
-    }
+.debit {
+    color: #1b5e20;
+}
 
-    th,
-    td {
-      padding: 10px;
-      border-bottom: 1px solid #ddd;
-      text-align: left;
-    }
+.credit {
+    color: #b71c1c;
+}
 
-    th {
-      background: #f1f3f5;
-    }
+.table-wrapper {
+    overflow-x: auto;
+}
 
-    .amount {
-      text-align: right;
-      white-space: nowrap;
-    }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+}
 
-    .total-row {
-      font-weight: bold;
-      background: #fafafa;
-    }
+th,
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
 
-    .empty {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      text-align: center;
-      color: #777;
-    }
+th {
+    background: #f1f3f5;
+}
 
-    .back {
-      display: inline-block;
-      margin-bottom: 20px;
-      text-decoration: none;
-      background: #222;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 8px;
-    }
+.amount {
+    text-align: right;
+    white-space: nowrap;
+}
 
-    .back:hover {
-      opacity: 0.85;
-    }
-  </style>
+.total-row {
+    font-weight: bold;
+    background: #fafafa;
+}
+
+.empty {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    color: #777;
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-decoration: none;
+    background: #222;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+</style>
+
 </head>
 
 <body>
 
 <div class="container">
 
-  <a href="index.html" class="back">← Kembali ke Dashboard</a>
+<a href="index.html" class="back">
+    ← Kembali ke Dashboard
+</a>
 
-  <h1>📚 Buku Besar</h1>
-  <div class="subtitle">
+<h1>📚 Buku Besar</h1>
+
+<div class="subtitle">
     Ilham ERP — General Ledger
-  </div>
+</div>
 
-  <div id="ledgerContainer"></div>
+<div id="businessInfo" class="business-info"></div>
+
+<div id="ledgerContainer"></div>
 
 </div>
 
 <script>
 
-  // ==============================
-  // AMBIL DATA
-  // ==============================
-
-  const ACTIVE_BUSINESS_KEY = "ilhamERP_activeBusiness";
+const BUSINESS_KEY = "ilhamERP_businesses";
+const ACTIVE_BUSINESS_KEY = "ilhamERP_activeBusiness";
 const ACCOUNT_KEY = "ilhamERP_accounts";
 const TRANSACTION_KEY = "ilhamERP_transactions";
 
-const activeBusinessId =
-  localStorage.getItem(ACTIVE_BUSINESS_KEY);
 
-const allAccounts = JSON.parse(
-  localStorage.getItem(ACCOUNT_KEY)
-) || [];
+function getActiveBusiness() {
 
-const allTransactions = JSON.parse(
-  localStorage.getItem(TRANSACTION_KEY)
-) || [];
+    const businesses =
+        JSON.parse(
+            localStorage.getItem(BUSINESS_KEY)
+        ) || [];
 
-const accounts = activeBusinessId
-  ? allAccounts.filter(
-      account =>
-        String(account.businessId) ===
-        String(activeBusinessId)
-    )
-  : [];
+    let activeId =
+        localStorage.getItem(ACTIVE_BUSINESS_KEY);
 
-const transactions = activeBusinessId
-  ? allTransactions.filter(
-      transaction =>
-        String(transaction.businessId) ===
-        String(activeBusinessId)
-    )
-  : [];
+    if (!activeId && businesses.length > 0) {
 
-  // ==============================
-  // FORMAT RUPIAH
-  // ==============================
+        activeId = businesses[0].id;
 
-  function formatRupiah(number) {
+        localStorage.setItem(
+            ACTIVE_BUSINESS_KEY,
+            activeId
+        );
+    }
 
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      maximumFractionDigits: 0
-    }).format(number);
-
-  }
+    return businesses.find(
+        business =>
+            String(business.id) ===
+            String(activeId)
+    ) || null;
+}
 
 
-  // ==============================
-  // RENDER BUKU BESAR
-  // ==============================
+function getAccounts() {
 
-  function renderLedger() {
+    const accounts =
+        JSON.parse(
+            localStorage.getItem(ACCOUNT_KEY)
+        ) || [];
+
+    return Array.isArray(accounts)
+        ? accounts
+        : [];
+}
+
+
+function getTransactions() {
+
+    const transactions =
+        JSON.parse(
+            localStorage.getItem(TRANSACTION_KEY)
+        ) || [];
+
+    return Array.isArray(transactions)
+        ? transactions
+        : [];
+}
+
+
+function getAccountById(id) {
+
+    return getAccounts().find(
+        account =>
+            String(account.id) === String(id)
+    ) || null;
+}
+
+
+function formatRupiah(number) {
+
+    return new Intl.NumberFormat(
+        "id-ID",
+        {
+            style: "currency",
+            currency: "IDR",
+            maximumFractionDigits: 0
+        }
+    ).format(Number(number) || 0);
+}
+
+
+function renderLedger() {
 
     const container =
-      document.getElementById("ledgerContainer");
+        document.getElementById(
+            "ledgerContainer"
+        );
 
     container.innerHTML = "";
 
 
-    // Kalau belum ada akun
+    const business =
+        getActiveBusiness();
 
-    if (accounts.length === 0) {
 
-      container.innerHTML = `
-        <div class="empty">
-          Belum ada akun.<br><br>
-          Silakan buat akun terlebih dahulu di
-          <b>Chart of Accounts</b>.
-        </div>
-      `;
+    if (!business) {
 
-      return;
+        document.getElementById(
+            "businessInfo"
+        ).innerHTML = `
+            <b>Belum ada usaha aktif.</b>
+            Silakan buat usaha terlebih dahulu.
+        `;
+
+        return;
     }
 
 
-    // ==============================
-    // LOOP SETIAP AKUN
-    // ==============================
-
-    accounts.forEach(account => {
-
-      let totalDebit = 0;
-      let totalCredit = 0;
-
-      let rows = "";
+    document.getElementById(
+        "businessInfo"
+    ).innerHTML = `
+        <b>Usaha Aktif:</b>
+        ${business.name || "-"}
+    `;
 
 
-      // ==============================
-      // CARI TRANSAKSI AKUN
-      // ==============================
-
-      transactions.forEach(transaction => {
-
-        const amount =
-          Number(transaction.amount) || 0;
+    const accounts =
+        getAccounts().filter(
+            account =>
+                String(account.businessId) ===
+                String(business.id)
+        );
 
 
-        // ==========================
-        // TRANSAKSI DEBIT
-        // ==========================
-
-        if (
-          transaction.debitCode === account.code
-        ) {
-
-          totalDebit += amount;
-
-          rows += `
-            <tr>
-
-              <td>
-                ${transaction.date || "-"}
-              </td>
-
-              <td>
-                ${transaction.description || "-"}
-              </td>
-
-              <td>
-                Debit
-              </td>
-
-              <td class="amount">
-                ${formatRupiah(amount)}
-              </td>
-
-              <td class="amount">
-                -
-              </td>
-
-            </tr>
-          `;
-
-        }
+    const transactions =
+        getTransactions().filter(
+            transaction =>
+                String(transaction.businessId) ===
+                String(business.id)
+        );
 
 
-        // ==========================
-        // TRANSAKSI KREDIT
-        // ==========================
+    if (accounts.length === 0) {
 
-        if (
-          transaction.creditCode === account.code
-        ) {
-
-          totalCredit += amount;
-
-          rows += `
-            <tr>
-
-              <td>
-                ${transaction.date || "-"}
-              </td>
-
-              <td>
-                ${transaction.description || "-"}
-              </td>
-
-              <td>
-                Kredit
-              </td>
-
-              <td class="amount">
-                -
-              </td>
-
-              <td class="amount">
-                ${formatRupiah(amount)}
-              </td>
-
-            </tr>
-          `;
-
-        }
-
-      });
-
-
-      // ==============================
-      // HITUNG SALDO
-      // ==============================
-
-      let balance = 0;
-
-      if (
-        account.normalBalance === "Debit"
-      ) {
-
-        balance =
-          totalDebit - totalCredit;
-
-      } else {
-
-        balance =
-          totalCredit - totalDebit;
-
-      }
-
-
-      // ==============================
-      // JIKA TIDAK ADA TRANSAKSI
-      // ==============================
-
-      if (rows === "") {
-
-        rows = `
-          <tr>
-            <td colspan="5"
-                style="text-align:center;color:#888;">
-              Belum ada transaksi untuk akun ini.
-            </td>
-          </tr>
+        container.innerHTML = `
+            <div class="empty">
+                Belum ada akun untuk usaha ini.
+                <br><br>
+                Silakan buat akun di
+                <b>Chart of Accounts</b>.
+            </div>
         `;
 
-      }
+        return;
+    }
 
 
-      // ==============================
-      // TAMPILKAN AKUN
-      // ==============================
+    accounts.forEach(
+        function(account) {
 
-      const card =
-        document.createElement("div");
+            let totalDebit = 0;
+            let totalCredit = 0;
 
-      card.className = "account-card";
-
-
-      card.innerHTML = `
-
-        <div class="account-header">
-
-          <div>
-
-            <div class="account-name">
-              ${account.name}
-            </div>
-
-            <div class="account-code">
-              Kode: ${account.code}
-              • ${account.group}
-              • Normal: ${account.normalBalance}
-            </div>
-
-          </div>
-
-          <div class="balance">
-
-            Saldo:
-            <span class="${
-              account.normalBalance === "Debit"
-              ? "debit"
-              : "credit"
-            }">
-
-              ${formatRupiah(balance)}
-
-            </span>
-
-          </div>
-
-        </div>
+            let rows = "";
 
 
-        <div class="table-wrapper">
+            transactions.forEach(
+                function(transaction) {
 
-          <table>
-
-            <thead>
-
-              <tr>
-
-                <th>Tanggal</th>
-
-                <th>Keterangan</th>
-
-                <th>Posisi</th>
-
-                <th class="amount">Debit</th>
-
-                <th class="amount">Kredit</th>
-
-              </tr>
-
-            </thead>
+                    const amount =
+                        Number(transaction.amount) || 0;
 
 
-            <tbody>
+                    /*
+                     * CEK TRANSAKSI DEBIT
+                     */
 
-              ${rows}
+                    if (
+                        String(
+                            transaction.debitAccountId
+                        ) === String(account.id)
+                    ) {
 
-              <tr class="total-row">
+                        totalDebit += amount;
 
-                <td colspan="3">
-                  TOTAL
-                </td>
+                        rows += `
+                            <tr>
 
-                <td class="amount">
-                  ${formatRupiah(totalDebit)}
-                </td>
+                                <td>
+                                    ${transaction.date || "-"}
+                                </td>
 
-                <td class="amount">
-                  ${formatRupiah(totalCredit)}
-                </td>
+                                <td>
+                                    ${transaction.invoice || "-"}
+                                </td>
 
-              </tr>
+                                <td>
+                                    ${transaction.description || "-"}
+                                </td>
 
-            </tbody>
+                                <td class="debit">
+                                    Debit
+                                </td>
 
-          </table>
+                                <td class="amount">
+                                    ${formatRupiah(amount)}
+                                </td>
 
-        </div>
+                                <td class="amount">
+                                    -
+                                </td>
 
-      `;
-
-
-      container.appendChild(card);
-
-    });
-
-  }
+                            </tr>
+                        `;
+                    }
 
 
-  // ==============================
-  // JALANKAN
-  // ==============================
+                    /*
+                     * CEK TRANSAKSI KREDIT
+                     */
 
-  renderLedger();
+                    if (
+                        String(
+                            transaction.creditAccountId
+                        ) === String(account.id)
+                    ) {
+
+                        totalCredit += amount;
+
+                        rows += `
+                            <tr>
+
+                                <td>
+                                    ${transaction.date || "-"}
+                                </td>
+
+                                <td>
+                                    ${transaction.invoice || "-"}
+                                </td>
+
+                                <td>
+                                    ${transaction.description || "-"}
+                                </td>
+
+                                <td class="credit">
+                                    Kredit
+                                </td>
+
+                                <td class="amount">
+                                    -
+                                </td>
+
+                                <td class="amount">
+                                    ${formatRupiah(amount)}
+                                </td>
+
+                            </tr>
+                        `;
+                    }
+
+                }
+            );
+
+
+            /*
+             * HITUNG SALDO
+             */
+
+            let balance = 0;
+
+            if (
+                account.normalBalance === "Debit"
+            ) {
+
+                balance =
+                    totalDebit - totalCredit;
+
+            } else {
+
+                balance =
+                    totalCredit - totalDebit;
+
+            }
+
+
+            /*
+             * JIKA BELUM ADA TRANSAKSI
+             */
+
+            if (rows === "") {
+
+                rows = `
+                    <tr>
+
+                        <td colspan="6"
+                            style="
+                            text-align:center;
+                            color:#888;
+                            padding:25px;
+                            ">
+
+                            Belum ada transaksi
+                            untuk akun ini.
+
+                        </td>
+
+                    </tr>
+                `;
+            }
+
+
+            /*
+             * BUAT CARD AKUN
+             */
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "account-card";
+
+
+            card.innerHTML = `
+
+                <div class="account-header">
+
+                    <div>
+
+                        <div class="account-name">
+                            ${account.name || "-"}
+                        </div>
+
+                        <div class="account-code">
+
+                            Kode: ${account.code || "-"}
+                            • ${account.group || "-"}
+                            • Normal:
+                            ${account.normalBalance || "-"}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="balance">
+
+                        Saldo:
+
+                        <span class="${
+                            account.normalBalance === "Debit"
+                                ? "debit"
+                                : "credit"
+                        }">
+
+                            ${formatRupiah(balance)}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Tanggal</th>
+
+                                <th>Invoice</th>
+
+                                <th>Keterangan</th>
+
+                                <th>Posisi</th>
+
+                                <th class="amount">
+                                    Debit
+                                </th>
+
+                                <th class="amount">
+                                    Kredit
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            ${rows}
+
+                            <tr class="total-row">
+
+                                <td colspan="4">
+                                    TOTAL
+                                </td>
+
+                                <td class="amount">
+                                    ${formatRupiah(totalDebit)}
+                                </td>
+
+                                <td class="amount">
+                                    ${formatRupiah(totalCredit)}
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(card);
+
+        }
+    );
+
+}
+
+
+renderLedger();
 
 </script>
 
