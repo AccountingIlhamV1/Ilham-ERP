@@ -1,269 +1,306 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jurnal Umum - Ilham ERP</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<title>Jurnal Umum - Ilham ERP</title>
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
-            color: #1f2937;
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        .header {
-            background: #111827;
-            color: white;
-            padding: 22px 20px;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #1f2937;
+}
 
-        .container {
-            width: 94%;
-            max-width: 1150px;
-            margin: auto;
-        }
+.header {
+    background: #111827;
+    color: white;
+    padding: 22px 20px;
+}
 
-        .header h1 {
-            margin: 0;
-            font-size: 26px;
-        }
+.container {
+    width: 94%;
+    max-width: 1150px;
+    margin: auto;
+}
 
-        .header p {
-            margin: 7px 0 0;
-            color: #d1d5db;
-        }
+.header h1 {
+    margin: 0;
+    font-size: 26px;
+}
 
-        .back {
-            display: inline-block;
-            margin: 25px 0 15px;
-            color: #374151;
-            text-decoration: none;
-            font-weight: bold;
-        }
+.header p {
+    margin: 7px 0 0;
+    color: #d1d5db;
+}
 
-        .card {
-            background: white;
-            padding: 22px;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
-        }
+.back {
+    display: inline-block;
+    margin: 25px 0 15px;
+    color: #374151;
+    text-decoration: none;
+    font-weight: bold;
+}
 
-        .info {
-            background: #eff6ff;
-            padding: 15px;
-            border-radius: 10px;
-            color: #1e40af;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+}
 
-        .table-wrapper {
-            overflow-x: auto;
-        }
+.info {
+    background: #eff6ff;
+    padding: 15px;
+    border-radius: 10px;
+    color: #1e40af;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 850px;
-        }
+.summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
 
-        th,
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #e5e7eb;
-            text-align: left;
-        }
+.summary-box {
+    background: #f9fafb;
+    padding: 18px;
+    border-radius: 12px;
+}
 
-        th {
-            background: #f3f4f6;
-        }
+.summary-box span {
+    display: block;
+    color: #6b7280;
+    margin-bottom: 7px;
+}
 
-        .debit {
-            color: #166534;
-            font-weight: bold;
-        }
+.summary-box strong {
+    font-size: 20px;
+}
 
-        .credit {
-            color: #1d4ed8;
-            font-weight: bold;
-        }
+.table-wrapper {
+    overflow-x: auto;
+}
 
-        .credit-account {
-            padding-left: 35px;
-        }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 850px;
+}
 
-        .empty {
-            text-align: center;
-            padding: 30px;
-            color: #6b7280;
-        }
+th,
+td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}
 
-        .total-row {
-            font-weight: bold;
-            background: #f9fafb;
-        }
+th {
+    background: #f3f4f6;
+}
 
-        .summary {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
+.debit {
+    color: #166534;
+    font-weight: bold;
+}
 
-        .summary-box {
-            background: #f9fafb;
-            padding: 18px;
-            border-radius: 12px;
-        }
+.credit {
+    color: #1d4ed8;
+    font-weight: bold;
+}
 
-        .summary-box span {
-            display: block;
-            color: #6b7280;
-            margin-bottom: 7px;
-        }
+.credit-account {
+    padding-left: 35px;
+}
 
-        .summary-box strong {
-            font-size: 20px;
-        }
+.empty {
+    text-align: center;
+    padding: 30px;
+    color: #6b7280;
+}
 
-        @media (max-width: 650px) {
-            .summary {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+.total-row {
+    font-weight: bold;
+    background: #f9fafb;
+}
+
+@media (max-width: 650px) {
+    .summary {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <div class="header">
-        <div class="container">
-            <h1>📖 Jurnal Umum</h1>
-            <p>Ilham ERP — Accounting Learning System</p>
-        </div>
-    </div>
-
-
+<div class="header">
     <div class="container">
-
-        <a href="index.html" class="back">
-            ← Kembali ke Dashboard
-        </a>
-
-
-        <div class="card">
-
-            <h2>Jurnal Umum</h2>
-
-            <div class="info">
-                Jurnal ini dibuat secara otomatis berdasarkan
-                transaksi yang telah dimasukkan pada menu
-                <strong>Transaksi</strong>.
-            </div>
-
-
-            <div class="summary">
-
-                <div class="summary-box">
-                    <span>Total Debit</span>
-                    <strong id="totalDebit">
-                        Rp0
-                    </strong>
-                </div>
-
-                <div class="summary-box">
-                    <span>Total Kredit</span>
-                    <strong id="totalCredit">
-                        Rp0
-                    </strong>
-                </div>
-
-            </div>
-
-
-            <div class="table-wrapper">
-
-                <table>
-
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Tanggal</th>
-                            <th>Keterangan</th>
-                            <th>Akun</th>
-                            <th>Debit</th>
-                            <th>Kredit</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="journalTable">
-                    </tbody>
-
-                    <tfoot>
-
-                        <tr class="total-row">
-
-                            <td colspan="4">
-                                TOTAL
-                            </td>
-
-                            <td id="footerDebit">
-                                Rp0
-                            </td>
-
-                            <td id="footerCredit">
-                                Rp0
-                            </td>
-
-                        </tr>
-
-                    </tfoot>
-
-                </table>
-
-            </div>
-
-        </div>
-
+        <h1>📖 Jurnal Umum</h1>
+        <p>Ilham ERP — Accounting Learning System</p>
     </div>
+</div>
 
+<div class="container">
+
+<a href="index.html" class="back">
+    ← Kembali ke Dashboard
+</a>
+
+<div class="card">
+
+<h2>Jurnal Umum</h2>
+
+<div class="info">
+    Jurnal ini dibuat otomatis berdasarkan transaksi
+    dari usaha yang sedang aktif.
+</div>
+
+<div class="summary">
+
+<div class="summary-box">
+    <span>Total Debit</span>
+    <strong id="totalDebit">Rp0</strong>
+</div>
+
+<div class="summary-box">
+    <span>Total Kredit</span>
+    <strong id="totalCredit">Rp0</strong>
+</div>
+
+</div>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+<tr>
+    <th>No</th>
+    <th>Tanggal</th>
+    <th>Keterangan</th>
+    <th>Akun</th>
+    <th>Debit</th>
+    <th>Kredit</th>
+</tr>
+</thead>
+
+<tbody id="journalTable"></tbody>
+
+<tfoot>
+
+<tr class="total-row">
+    <td colspan="4">TOTAL</td>
+    <td id="footerDebit">Rp0</td>
+    <td id="footerCredit">Rp0</td>
+</tr>
+
+</tfoot>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
 
 <script>
 
-// ==========================================
-// AMBIL DATA TRANSAKSI
-// ==========================================
-
+const BUSINESS_KEY = "ilhamERP_businesses";
 const ACTIVE_BUSINESS_KEY = "ilhamERP_activeBusiness";
+const ACCOUNT_KEY = "ilhamERP_accounts";
 const TRANSACTION_KEY = "ilhamERP_transactions";
 
-const activeBusinessId =
-    localStorage.getItem(ACTIVE_BUSINESS_KEY);
 
-const allTransactions =
-    JSON.parse(
-        localStorage.getItem(TRANSACTION_KEY)
-    ) || [];
+function getActiveBusiness() {
 
-const transactions = activeBusinessId
-    ? allTransactions.filter(
+    const businesses =
+        JSON.parse(
+            localStorage.getItem(BUSINESS_KEY)
+        ) || [];
+
+    let activeId =
+        localStorage.getItem(ACTIVE_BUSINESS_KEY);
+
+    if (!activeId && businesses.length > 0) {
+
+        activeId = businesses[0].id;
+
+        localStorage.setItem(
+            ACTIVE_BUSINESS_KEY,
+            activeId
+        );
+    }
+
+    return businesses.find(
+        business =>
+            String(business.id) === String(activeId)
+    ) || null;
+}
+
+
+function getAccounts() {
+
+    const accounts =
+        JSON.parse(
+            localStorage.getItem(ACCOUNT_KEY)
+        ) || [];
+
+    return Array.isArray(accounts)
+        ? accounts
+        : [];
+}
+
+
+function getTransactions() {
+
+    const transactions =
+        JSON.parse(
+            localStorage.getItem(TRANSACTION_KEY)
+        ) || [];
+
+    return Array.isArray(transactions)
+        ? transactions
+        : [];
+}
+
+
+function getAccountById(id) {
+
+    return getAccounts().find(
+        account =>
+            String(account.id) === String(id)
+    ) || null;
+}
+
+
+function getActiveTransactions() {
+
+    const business =
+        getActiveBusiness();
+
+    if (!business) {
+        return [];
+    }
+
+    return getTransactions().filter(
         transaction =>
             String(transaction.businessId) ===
-            String(activeBusinessId)
-      )
-    : [];
+            String(business.id)
+    );
+}
 
-
-// ==========================================
-// FORMAT RUPIAH
-// ==========================================
 
 function rupiah(number) {
 
@@ -274,24 +311,19 @@ function rupiah(number) {
             currency: "IDR",
             maximumFractionDigits: 0
         }
-    ).format(number);
-
+    ).format(Number(number) || 0);
 }
 
-
-// ==========================================
-// TAMPILKAN JURNAL
-// ==========================================
 
 function renderJournal() {
 
     const table =
-        document.getElementById(
-            "journalTable"
-        );
+        document.getElementById("journalTable");
 
     table.innerHTML = "";
 
+    const transactions =
+        getActiveTransactions();
 
     let totalDebit = 0;
     let totalCredit = 0;
@@ -300,28 +332,14 @@ function renderJournal() {
     if (transactions.length === 0) {
 
         table.innerHTML = `
-
             <tr>
-
-                <td
-                    colspan="6"
-                    class="empty"
-                >
-
-                    Belum ada transaksi.
-                    Silakan masukkan transaksi
-                    terlebih dahulu.
-
+                <td colspan="6" class="empty">
+                    Belum ada transaksi untuk usaha aktif.
                 </td>
-
             </tr>
-
         `;
 
-        updateTotals(
-            0,
-            0
-        );
+        updateTotals(0, 0);
 
         return;
     }
@@ -330,13 +348,44 @@ function renderJournal() {
     transactions.forEach(
         function(transaction, index) {
 
-            // ==========================
-            // BARIS DEBIT
-            // ==========================
+            const amount =
+                Number(transaction.amount) || 0;
+
+            const debitAccount =
+                getAccountById(
+                    transaction.debitAccountId
+                );
+
+            const creditAccount =
+                getAccountById(
+                    transaction.creditAccountId
+                );
+
+
+            const debitName =
+                debitAccount
+                    ? debitAccount.name
+                    : "Akun tidak ditemukan";
+
+            const debitCode =
+                debitAccount
+                    ? debitAccount.code
+                    : "-";
+
+
+            const creditName =
+                creditAccount
+                    ? creditAccount.name
+                    : "Akun tidak ditemukan";
+
+            const creditCode =
+                creditAccount
+                    ? creditAccount.code
+                    : "-";
+
 
             const debitRow =
                 document.createElement("tr");
-
 
             debitRow.innerHTML = `
 
@@ -345,73 +394,50 @@ function renderJournal() {
                 </td>
 
                 <td rowspan="2">
-                    ${transaction.date}
+                    ${transaction.date || "-"}
                 </td>
 
                 <td rowspan="2">
-                    ${transaction.description}
+                    ${transaction.description || "-"}
                 </td>
 
                 <td class="debit">
-                    ${transaction.debitCode}
-                    -
-                    ${transaction.debitName}
+                    ${debitCode} - ${debitName}
                 </td>
 
                 <td class="debit">
-                    ${rupiah(transaction.amount)}
+                    ${rupiah(amount)}
                 </td>
 
-                <td>
-                    -
-                </td>
+                <td>-</td>
 
             `;
 
+            table.appendChild(debitRow);
 
-            table.appendChild(
-                debitRow
-            );
-
-
-            // ==========================
-            // BARIS KREDIT
-            // ==========================
 
             const creditRow =
                 document.createElement("tr");
 
-
             creditRow.innerHTML = `
 
                 <td class="credit credit-account">
-                    ${transaction.creditCode}
-                    -
-                    ${transaction.creditName}
+                    ${creditCode} - ${creditName}
                 </td>
 
-                <td>
-                    -
-                </td>
+                <td>-</td>
 
                 <td class="credit">
-                    ${rupiah(transaction.amount)}
+                    ${rupiah(amount)}
                 </td>
 
             `;
 
-
-            table.appendChild(
-                creditRow
-            );
+            table.appendChild(creditRow);
 
 
-            totalDebit +=
-                transaction.amount;
-
-
-            totalCredit +=
-                transaction.amount;
+            totalDebit += amount;
+            totalCredit += amount;
 
         }
     );
@@ -421,13 +447,8 @@ function renderJournal() {
         totalDebit,
         totalCredit
     );
-
 }
 
-
-// ==========================================
-// UPDATE TOTAL
-// ==========================================
 
 function updateTotals(
     totalDebit,
@@ -436,37 +457,25 @@ function updateTotals(
 
     document.getElementById(
         "totalDebit"
-    ).textContent =
-        rupiah(totalDebit);
-
+    ).textContent = rupiah(totalDebit);
 
     document.getElementById(
         "totalCredit"
-    ).textContent =
-        rupiah(totalCredit);
-
+    ).textContent = rupiah(totalCredit);
 
     document.getElementById(
         "footerDebit"
-    ).textContent =
-        rupiah(totalDebit);
-
+    ).textContent = rupiah(totalDebit);
 
     document.getElementById(
         "footerCredit"
-    ).textContent =
-        rupiah(totalCredit);
-
+    ).textContent = rupiah(totalCredit);
 }
 
-
-// ==========================================
-// LOAD
-// ==========================================
 
 renderJournal();
 
 </script>
 
 </body>
-  </html>
+    </html>
