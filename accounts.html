@@ -1,205 +1,195 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chart of Accounts - Ilham ERP</title>
 
-  <title>Chart of Accounts - Ilham ERP</title>
+<style>
+*{box-sizing:border-box}
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f6f8;
+  color:#222
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
-    }
+header{
+  background:#222;
+  color:#fff;
+  padding:25px 20px
+}
 
-    header {
-      background: #222;
-      color: white;
-      padding: 25px 20px;
-    }
+header h1{
+  margin:0 0 5px
+}
 
-    header h1 {
-      margin: 0 0 5px;
-    }
+header p{
+  margin:0;
+  color:#ddd
+}
 
-    header p {
-      margin: 0;
-      color: #ddd;
-    }
+.container{
+  max-width:1100px;
+  margin:25px auto;
+  padding:0 15px
+}
 
-    .container {
-      max-width: 1100px;
-      margin: 25px auto;
-      padding: 0 15px;
-    }
+.back{
+  display:inline-block;
+  margin-bottom:15px;
+  text-decoration:none;
+  color:#2563eb;
+  font-weight:bold
+}
 
-    .back {
-      display: inline-block;
-      margin-bottom: 15px;
-      text-decoration: none;
-      color: #2563eb;
-      font-weight: bold;
-    }
+.card{
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:20px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08)
+}
 
-    .active-box {
-      background: #ecfdf5;
-      border: 1px solid #86efac;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
+.active-box{
+  background:#ecfdf5;
+  border:1px solid #86efac;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:20px
+}
 
-    .active-box strong {
-      color: #166534;
-    }
+.active-box strong{
+  color:#166534
+}
 
-    .active-name {
-      display: block;
-      margin-top: 7px;
-      font-size: 18px;
-      font-weight: bold;
-    }
+.active-name{
+  display:block;
+  margin-top:7px;
+  font-size:18px;
+  font-weight:bold
+}
 
-    .warning {
-      background: #fff7ed;
-      border: 1px solid #fdba74;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      color: #9a3412;
-    }
+.warning{
+  background:#fff7ed;
+  border:1px solid #fdba74;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:20px;
+  color:#9a3412
+}
 
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-    }
+.warning a{
+  color:#2563eb;
+  font-weight:bold
+}
 
-    .card h2 {
-      margin-top: 0;
-    }
+.status{
+  margin-bottom:15px;
+  padding:10px;
+  border-radius:8px;
+  background:#f3f4f6;
+  color:#555;
+  font-size:14px
+}
 
-    label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 7px;
-    }
+.info{
+  color:#666;
+  font-size:13px;
+  line-height:1.5
+}
 
-    input,
-    select {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 15px;
-      margin-bottom: 15px;
-      background: white;
-    }
+label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:7px
+}
 
-    button {
-      border: none;
-      padding: 11px 16px;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-right: 5px;
-      margin-bottom: 5px;
-    }
+input,
+select{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  font-size:15px;
+  margin-bottom:15px;
+  background:#fff
+}
 
-    .btn-save {
-      background: #2563eb;
-      color: white;
-    }
+button{
+  border:0;
+  padding:11px 16px;
+  border-radius:8px;
+  font-size:14px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-right:5px;
+  margin-bottom:5px
+}
 
-    .btn-edit {
-      background: #f59e0b;
-      color: white;
-    }
+.btn-save{
+  background:#2563eb;
+  color:#fff
+}
 
-    .btn-delete {
-      background: #dc2626;
-      color: white;
-    }
+.btn-edit{
+  background:#f59e0b;
+  color:#fff
+}
 
-    .btn-cancel {
-      background: #6b7280;
-      color: white;
-    }
+.btn-delete{
+  background:#dc2626;
+  color:#fff
+}
 
-    .btn-business {
-      background: #16a34a;
-      color: white;
-    }
+.btn-cancel{
+  background:#6b7280;
+  color:#fff
+}
 
-    .table-wrapper {
-      overflow-x: auto;
-    }
+.table-wrapper{
+  overflow-x:auto
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 850px;
-    }
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:850px
+}
 
-    th,
-    td {
-      padding: 12px;
-      border-bottom: 1px solid #ddd;
-      text-align: left;
-    }
+th,
+td{
+  padding:12px;
+  border-bottom:1px solid #ddd;
+  text-align:left;
+  vertical-align:top
+}
 
-    th {
-      background: #f3f4f6;
-    }
+th{
+  background:#f3f4f6
+}
 
-    .empty {
-      text-align: center;
-      color: #777;
-      padding: 25px;
-    }
+.empty{
+  text-align:center;
+  color:#777;
+  padding:25px
+}
 
-    .info {
-      color: #666;
-      font-size: 13px;
-      line-height: 1.5;
-    }
+@media(max-width:600px){
+  header{
+    padding:20px 15px
+  }
 
-    .badge {
-      display: inline-block;
-      padding: 5px 9px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: bold;
-    }
+  .card{
+    padding:15px
+  }
 
-    .badge-debit {
-      background: #dbeafe;
-      color: #1d4ed8;
-    }
-
-    .badge-credit {
-      background: #fee2e2;
-      color: #b91c1c;
-    }
-
-    .status {
-      margin-bottom: 15px;
-      padding: 10px;
-      border-radius: 8px;
-      background: #f3f4f6;
-      color: #555;
-      font-size: 14px;
-    }
-  </style>
+  .container{
+    margin:15px auto
+  }
+}
+</style>
 </head>
 
 <body>
@@ -209,18 +199,14 @@
   <p>Daftar akun berdasarkan usaha yang sedang aktif</p>
 </header>
 
-
 <div class="container">
 
   <a href="index.html" class="back">
     ← Kembali ke Dashboard
   </a>
 
-
   <!-- USAHA AKTIF -->
-
   <div class="active-box">
-
     <strong>🏢 Usaha Aktif</strong>
 
     <span
@@ -229,35 +215,26 @@
     >
       Belum ada usaha dipilih
     </span>
-
   </div>
 
-
-  <!-- PERINGATAN JIKA BELUM ADA USAHA -->
-
+  <!-- PERINGATAN -->
   <div
     id="noBusinessWarning"
     class="warning"
-    style="display:none;"
+    style="display:none"
   >
-
     Belum ada usaha aktif.
-
     <br><br>
 
     Silakan buat atau pilih usaha terlebih dahulu.
-
     <br><br>
 
     <a href="business.html">
       Buka Data Usaha
     </a>
-
   </div>
 
-
-  <!-- FORM COA -->
-
+  <!-- FORM -->
   <div class="card">
 
     <h2 id="formTitle">
@@ -271,7 +248,6 @@
       Memuat data...
     </div>
 
-
     <form id="accountForm">
 
       <label for="accountCode">
@@ -281,10 +257,9 @@
       <input
         type="text"
         id="accountCode"
-        placeholder="Contoh: 1101"
         required
+        placeholder="1101"
       >
-
 
       <label for="accountName">
         Nama Akun
@@ -293,10 +268,9 @@
       <input
         type="text"
         id="accountName"
-        placeholder="Contoh: Kas"
         required
+        placeholder="Kas"
       >
-
 
       <label for="accountGroup">
         Kelompok Akun
@@ -306,7 +280,6 @@
         id="accountGroup"
         required
       >
-
         <option value="">
           -- Pilih Kelompok --
         </option>
@@ -342,9 +315,7 @@
         <option value="Beban">
           Beban
         </option>
-
       </select>
-
 
       <label for="normalBalance">
         Saldo Normal
@@ -354,7 +325,6 @@
         id="normalBalance"
         required
       >
-
         <option value="">
           -- Pilih Saldo Normal --
         </option>
@@ -366,9 +336,7 @@
         <option value="Kredit">
           Kredit
         </option>
-
       </select>
-
 
       <button
         type="submit"
@@ -378,12 +346,11 @@
         Simpan Akun
       </button>
 
-
       <button
         type="button"
         class="btn-cancel"
         id="cancelButton"
-        style="display:none;"
+        style="display:none"
       >
         Batal Edit
       </button>
@@ -392,9 +359,7 @@
 
   </div>
 
-
   <!-- DAFTAR COA -->
-
   <div class="card">
 
     <h2>
@@ -403,16 +368,13 @@
 
     <p class="info">
       Hanya akun milik usaha aktif yang ditampilkan.
-      Tambah, edit, atau hapus akun di sini.
     </p>
-
 
     <div class="table-wrapper">
 
       <table>
 
         <thead>
-
           <tr>
             <th>No</th>
             <th>Kode</th>
@@ -421,11 +383,10 @@
             <th>Saldo Normal</th>
             <th>Aksi</th>
           </tr>
-
         </thead>
 
-
-        <tbody id="accountTable"></tbody>
+        <tbody id="accountTable">
+        </tbody>
 
       </table>
 
@@ -435,881 +396,917 @@
 
 </div>
 
-
 <script>
 
-  // ==========================================
-  // STORAGE
-  // ==========================================
+/* =====================================================
+   STORAGE KEY
+===================================================== */
 
-  const ACCOUNT_KEY =
-    "ilhamERP_accounts";
+const ACCOUNT_KEY =
+  "ilhamERP_accounts";
 
-  const BUSINESS_KEY =
-    "ilhamERP_businesses";
+const BUSINESS_KEY =
+  "ilhamERP_businesses";
 
-  const ACTIVE_BUSINESS_KEY =
-    "ilhamERP_activeBusiness";
+const ACTIVE_KEY =
+  "ilhamERP_activeBusiness";
 
-
-  let editingId = null;
-
-
-  // ==========================================
-  // AMBIL USAHA
-  // ==========================================
-
-  function getBusinesses() {
-
-    const data =
-      localStorage.getItem(BUSINESS_KEY);
-
-    if (!data) {
-      return [];
-    }
-
-    try {
-
-      const result =
-        JSON.parse(data);
-
-      return Array.isArray(result)
-        ? result
-        : [];
-
-    } catch (error) {
-
-      console.error(error);
-
-      return [];
-
-    }
-
-  }
+let editingId = null;
 
 
-  // ==========================================
-  // USAHA AKTIF
-  // ==========================================
+/* =====================================================
+   STORAGE HELPER
+===================================================== */
 
-  function getActiveBusiness() {
+function readArray(key){
 
-    const activeId =
-      localStorage.getItem(
-        ACTIVE_BUSINESS_KEY
+  try{
+
+    const value =
+      JSON.parse(
+        localStorage.getItem(key) || "[]"
       );
 
-    if (!activeId) {
-      return null;
-    }
+    return Array.isArray(value)
+      ? value
+      : [];
+
+  }catch(error){
+
+    console.error(
+      "Gagal membaca localStorage:",
+      error
+    );
+
+    return [];
+
+  }
+
+}
 
 
-    const businesses =
-      getBusinesses();
+/* =====================================================
+   DATA
+===================================================== */
+
+function getBusinesses(){
+
+  return readArray(
+    BUSINESS_KEY
+  );
+
+}
 
 
-    return businesses.find(
-      business =>
-        String(business.id) ===
-        String(activeId)
-    ) || null;
+function getAccounts(){
+
+  return readArray(
+    ACCOUNT_KEY
+  );
+
+}
+
+
+function saveAccounts(accounts){
+
+  localStorage.setItem(
+    ACCOUNT_KEY,
+    JSON.stringify(accounts)
+  );
+
+}
+
+
+/* =====================================================
+   ID COMPARISON
+===================================================== */
+
+function idEqual(a,b){
+
+  return String(a) === String(b);
+
+}
+
+
+/* =====================================================
+   USAHA AKTIF
+===================================================== */
+
+function getActiveBusiness(){
+
+  const businesses =
+    getBusinesses();
+
+
+  if(
+    businesses.length === 0
+  ){
+
+    return null;
 
   }
 
 
-  // ==========================================
-  // AMBIL COA
-  // ==========================================
-
-  function getAccounts() {
-
-    const data =
-      localStorage.getItem(ACCOUNT_KEY);
-
-    if (!data) {
-      return [];
-    }
-
-    try {
-
-      const result =
-        JSON.parse(data);
-
-      return Array.isArray(result)
-        ? result
-        : [];
-
-    } catch (error) {
-
-      console.error(error);
-
-      return [];
-
-    }
-
-  }
+  const savedId =
+    localStorage.getItem(
+      ACTIVE_KEY
+    );
 
 
-  // ==========================================
-  // SIMPAN COA
-  // ==========================================
+  let business =
+    businesses.find(
+      item =>
+        idEqual(
+          item.id,
+          savedId
+        )
+    );
 
-  function saveAccounts(accounts) {
+
+  /*
+    Jika activeBusiness kosong
+    atau tidak valid, gunakan
+    usaha pertama.
+  */
+
+  if(!business){
+
+    business =
+      businesses[0];
 
     localStorage.setItem(
-      ACCOUNT_KEY,
-      JSON.stringify(accounts)
+      ACTIVE_KEY,
+      String(business.id)
     );
 
   }
 
 
-  // ==========================================
-  // MIGRASI COA LAMA
-  // ==========================================
-  //
-  // Kalau sebelumnya sudah ada COA sebelum
-  // sistem Data Usaha dibuat, COA tersebut
-  // otomatis dikaitkan dengan usaha aktif.
-  //
-  // ==========================================
+  return business;
 
-  function migrateOldAccounts() {
-
-    const activeBusiness =
-      getActiveBusiness();
-
-    if (!activeBusiness) {
-      return;
-    }
+}
 
 
-    const accounts =
-      getAccounts();
+/* =====================================================
+   MIGRASI AKUN LAMA
+===================================================== */
+
+function migrateLegacyAccounts(){
+
+  const business =
+    getActiveBusiness();
 
 
-    let changed = false;
+  if(!business){
 
-
-    accounts.forEach(account => {
-
-      if (!account.businessId) {
-
-        account.businessId =
-          activeBusiness.id;
-
-        changed = true;
-
-      }
-
-    });
-
-
-    if (changed) {
-
-      saveAccounts(accounts);
-
-    }
+    return;
 
   }
 
 
-  // ==========================================
-  // FILTER COA USAHA AKTIF
-  // ==========================================
+  const accounts =
+    getAccounts();
 
-  function getActiveAccounts() {
 
-    const activeBusiness =
-      getActiveBusiness();
+  let changed = false;
 
-    if (!activeBusiness) {
-      return [];
+
+  /*
+    Akun lama yang belum memiliki
+    businessId akan dimasukkan ke
+    usaha aktif.
+  */
+
+  accounts.forEach(account => {
+
+    if(
+      account.businessId === undefined ||
+      account.businessId === null ||
+      account.businessId === ""
+    ){
+
+      account.businessId =
+        business.id;
+
+      changed = true;
+
     }
 
+  });
 
-    return getAccounts().filter(
-      account =>
-        String(account.businessId) ===
-        String(activeBusiness.id)
+
+  if(changed){
+
+    saveAccounts(accounts);
+
+  }
+
+}
+
+
+/* =====================================================
+   AKUN USAHA AKTIF
+===================================================== */
+
+function getActiveAccounts(){
+
+  const business =
+    getActiveBusiness();
+
+
+  if(!business){
+
+    return [];
+
+  }
+
+
+  return getAccounts().filter(
+    account =>
+      idEqual(
+        account.businessId,
+        business.id
+      )
+  );
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+  return String(
+    value ?? ""
+  )
+  .replace(
+    /[&<>"']/g,
+    function(char){
+
+      return {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[char];
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   TAMPILKAN USAHA AKTIF
+===================================================== */
+
+function renderActive(){
+
+  const business =
+    getActiveBusiness();
+
+
+  const activeElement =
+    document.getElementById(
+      "activeBusiness"
     );
 
-  }
+
+  const warning =
+    document.getElementById(
+      "noBusinessWarning"
+    );
 
 
-  // ==========================================
-  // TAMPILKAN USAHA AKTIF
-  // ==========================================
-
-  function renderActiveBusiness() {
-
-    const business =
-      getActiveBusiness();
+  const status =
+    document.getElementById(
+      "statusMessage"
+    );
 
 
-    const element =
-      document.getElementById(
-        "activeBusiness"
-      );
+  if(!business){
 
-
-    const warning =
-      document.getElementById(
-        "noBusinessWarning"
-      );
-
-
-    if (!business) {
-
-      element.textContent =
-        "Belum ada usaha dipilih";
-
-      warning.style.display =
-        "block";
-
-      document.getElementById(
-        "statusMessage"
-      ).textContent =
-        "Buat atau pilih usaha terlebih dahulu.";
-
-      return;
-
-    }
-
-
-    element.textContent =
-      business.name +
-      " — Tahun Buku " +
-      business.period;
+    activeElement.textContent =
+      "Belum ada usaha dipilih";
 
 
     warning.style.display =
-      "none";
+      "block";
 
 
-    document.getElementById(
-      "statusMessage"
-    ).textContent =
-      "COA untuk usaha aktif: " +
-      business.name;
+    status.textContent =
+      "Buat atau pilih usaha terlebih dahulu.";
+
+    return;
 
   }
 
 
-  // ==========================================
-  // SIMPAN / UPDATE COA
-  // ==========================================
+  activeElement.textContent =
+    `${business.name} — Tahun Buku ${business.period}`;
+
+
+  warning.style.display =
+    "none";
+
+
+  status.textContent =
+    `COA untuk usaha aktif: ${business.name} (${getActiveAccounts().length} akun)`;
+
+}
+
+
+/* =====================================================
+   RESET FORM
+===================================================== */
+
+function resetForm(){
+
+  editingId = null;
+
 
   document
     .getElementById("accountForm")
-    .addEventListener(
-      "submit",
-      function(event) {
+    .reset();
 
-        event.preventDefault();
-
-
-        const activeBusiness =
-          getActiveBusiness();
-
-
-        if (!activeBusiness) {
-
-          alert(
-            "Pilih atau buat usaha terlebih dahulu."
-          );
-
-          return;
-
-        }
-
-
-        const code =
-          document
-            .getElementById("accountCode")
-            .value
-            .trim();
-
-        const name =
-          document
-            .getElementById("accountName")
-            .value
-            .trim();
-
-        const group =
-          document
-            .getElementById("accountGroup")
-            .value;
-
-        const normalBalance =
-          document
-            .getElementById("normalBalance")
-            .value;
-
-
-        if (
-          !code ||
-          !name ||
-          !group ||
-          !normalBalance
-        ) {
-
-          alert(
-            "Semua data akun wajib diisi."
-          );
-
-          return;
-
-        }
-
-
-        const accounts =
-          getAccounts();
-
-
-        // ==================================
-        // MODE EDIT
-        // ==================================
-
-        if (editingId !== null) {
-
-          const index =
-            accounts.findIndex(
-              account =>
-                String(account.id) ===
-                String(editingId)
-            );
-
-
-          if (index === -1) {
-
-            alert(
-              "Akun tidak ditemukan."
-            );
-
-            return;
-
-          }
-
-
-          // Cek kode duplikat dalam usaha
-          const duplicate =
-            accounts.some(
-              account =>
-                String(account.businessId) ===
-                  String(activeBusiness.id) &&
-
-                String(account.code)
-                  .toLowerCase() ===
-                  String(code)
-                    .toLowerCase() &&
-
-                String(account.id) !==
-                  String(editingId)
-            );
-
-
-          if (duplicate) {
-
-            alert(
-              "Kode akun tersebut sudah digunakan."
-            );
-
-            return;
-
-          }
-
-
-          accounts[index].code =
-            code;
-
-          accounts[index].name =
-            name;
-
-          accounts[index].group =
-            group;
-
-          accounts[index].normalBalance =
-            normalBalance;
-
-
-          saveAccounts(accounts);
-
-
-          alert(
-            "Akun berhasil diperbarui."
-          );
-
-        }
-
-
-        // ==================================
-        // MODE TAMBAH
-        // ==================================
-
-        else {
-
-          const duplicate =
-            accounts.some(
-              account =>
-                String(account.businessId) ===
-                  String(activeBusiness.id) &&
-
-                String(account.code)
-                  .toLowerCase() ===
-                  String(code)
-                    .toLowerCase()
-            );
-
-
-          if (duplicate) {
-
-            alert(
-              "Kode akun tersebut sudah digunakan."
-            );
-
-            return;
-
-          }
-
-
-          const newAccount = {
-
-            id: Date.now(),
-
-            businessId:
-              activeBusiness.id,
-
-            code: code,
-
-            name: name,
-
-            group: group,
-
-            normalBalance:
-              normalBalance
-
-          };
-
-
-          accounts.push(newAccount);
-
-          saveAccounts(accounts);
-
-
-          alert(
-            "Akun berhasil disimpan."
-          );
-
-        }
-
-
-        resetForm();
-
-        renderAccounts();
-
-      }
-    );
-
-
-  // ==========================================
-  // EDIT COA
-  // ==========================================
-
-  function editAccount(id) {
-
-    const accounts =
-      getActiveAccounts();
-
-
-    const account =
-      accounts.find(
-        item =>
-          String(item.id) ===
-          String(id)
-      );
-
-
-    if (!account) {
-
-      alert(
-        "Akun tidak ditemukan."
-      );
-
-      return;
-
-    }
-
-
-    editingId =
-      account.id;
-
-
-    document.getElementById(
-      "accountCode"
-    ).value =
-      account.code;
-
-
-    document.getElementById(
-      "accountName"
-    ).value =
-      account.name;
-
-
-    document.getElementById(
-      "accountGroup"
-    ).value =
-      account.group;
-
-
-    document.getElementById(
-      "normalBalance"
-    ).value =
-      account.normalBalance;
-
-
-    document.getElementById(
-      "formTitle"
-    ).textContent =
-      "✏️ Edit Akun";
-
-
-    document.getElementById(
-      "saveButton"
-    ).textContent =
-      "Update Akun";
-
-
-    document.getElementById(
-      "cancelButton"
-    ).style.display =
-      "inline-block";
-
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-
-  }
-
-
-  // ==========================================
-  // HAPUS COA
-  // ==========================================
-
-  function deleteAccount(id) {
-
-    const accounts =
-      getAccounts();
-
-
-    const account =
-      accounts.find(
-        item =>
-          String(item.id) ===
-          String(id)
-      );
-
-
-    if (!account) {
-
-      alert(
-        "Akun tidak ditemukan."
-      );
-
-      return;
-
-    }
-
-
-    const activeBusiness =
-      getActiveBusiness();
-
-
-    if (!activeBusiness) {
-
-      alert(
-        "Tidak ada usaha aktif."
-      );
-
-      return;
-
-    }
-
-
-    if (
-      String(account.businessId) !==
-      String(activeBusiness.id)
-    ) {
-
-      alert(
-        "Akun ini bukan milik usaha aktif."
-      );
-
-      return;
-
-    }
-
-
-    const yakin =
-      confirm(
-        "Yakin ingin menghapus akun \"" +
-        account.code +
-        " - " +
-        account.name +
-        "\"?"
-      );
-
-
-    if (!yakin) {
-      return;
-    }
-
-
-    const newAccounts =
-      accounts.filter(
-        item =>
-          String(item.id) !==
-          String(id)
-      );
-
-
-    saveAccounts(newAccounts);
-
-
-    alert(
-      "Akun berhasil dihapus."
-    );
-
-
-    renderAccounts();
-
-  }
-
-
-  // ==========================================
-  // BATAL EDIT
-  // ==========================================
 
   document
-    .getElementById("cancelButton")
-    .addEventListener(
-      "click",
-      function() {
-
-        resetForm();
-
-      }
-    );
-
-
-  // ==========================================
-  // RESET FORM
-  // ==========================================
-
-  function resetForm() {
-
-    editingId = null;
-
-
-    document
-      .getElementById("accountForm")
-      .reset();
-
-
-    document.getElementById(
-      "formTitle"
-    ).textContent =
+    .getElementById("formTitle")
+    .textContent =
       "➕ Tambah Akun";
 
 
-    document.getElementById(
-      "saveButton"
-    ).textContent =
+  document
+    .getElementById("saveButton")
+    .textContent =
       "Simpan Akun";
 
 
-    document.getElementById(
-      "cancelButton"
-    ).style.display =
+  document
+    .getElementById("cancelButton")
+    .style.display =
       "none";
 
-  }
+}
 
 
-  // ==========================================
-  // TAMPILKAN COA
-  // ==========================================
+/* =====================================================
+   SIMPAN AKUN
+===================================================== */
 
-  function renderAccounts() {
+document
+  .getElementById("accountForm")
+  .addEventListener(
+    "submit",
+    function(event){
 
-    const table =
-      document.getElementById(
-        "accountTable"
+      event.preventDefault();
+
+
+      const business =
+        getActiveBusiness();
+
+
+      if(!business){
+
+        alert(
+          "Buat atau pilih usaha terlebih dahulu."
+        );
+
+        return;
+
+      }
+
+
+      const code =
+        document
+          .getElementById("accountCode")
+          .value
+          .trim();
+
+
+      const name =
+        document
+          .getElementById("accountName")
+          .value
+          .trim();
+
+
+      const group =
+        document
+          .getElementById("accountGroup")
+          .value;
+
+
+      const normalBalance =
+        document
+          .getElementById("normalBalance")
+          .value;
+
+
+      if(
+        !code ||
+        !name ||
+        !group ||
+        !normalBalance
+      ){
+
+        alert(
+          "Semua data akun wajib diisi."
+        );
+
+        return;
+
+      }
+
+
+      const accounts =
+        getAccounts();
+
+
+      /* ===============================
+         CEK KODE DUPLIKAT
+      =============================== */
+
+      const duplicate =
+        accounts.some(
+          account =>
+
+            idEqual(
+              account.businessId,
+              business.id
+            )
+
+            &&
+
+            String(account.code)
+              .toLowerCase() ===
+            code.toLowerCase()
+
+            &&
+
+            !idEqual(
+              account.id,
+              editingId
+            )
+        );
+
+
+      if(duplicate){
+
+        alert(
+          "Kode akun tersebut sudah digunakan pada usaha aktif."
+        );
+
+        return;
+
+      }
+
+
+      /* ===============================
+         EDIT
+      =============================== */
+
+      if(editingId !== null){
+
+        const index =
+          accounts.findIndex(
+            account =>
+              idEqual(
+                account.id,
+                editingId
+              )
+          );
+
+
+        if(
+          index < 0 ||
+          !idEqual(
+            accounts[index].businessId,
+            business.id
+          )
+        ){
+
+          alert(
+            "Akun tidak ditemukan pada usaha aktif."
+          );
+
+          return;
+
+        }
+
+
+        accounts[index] = {
+
+          ...accounts[index],
+
+          code: code,
+
+          name: name,
+
+          group: group,
+
+          normalBalance:
+            normalBalance
+
+        };
+
+
+        alert(
+          "Akun berhasil diperbarui."
+        );
+
+      }
+
+      /* ===============================
+         TAMBAH
+      =============================== */
+
+      else{
+
+        accounts.push({
+
+          id:
+            String(Date.now()),
+
+          businessId:
+            business.id,
+
+          code: code,
+
+          name: name,
+
+          group: group,
+
+          normalBalance:
+            normalBalance,
+
+          createdAt:
+            new Date().toISOString()
+
+        });
+
+
+        alert(
+          "Akun berhasil disimpan."
+        );
+
+      }
+
+
+      saveAccounts(
+        accounts
       );
 
 
-    table.innerHTML = "";
+      resetForm();
 
-
-    const activeBusiness =
-      getActiveBusiness();
-
-
-    if (!activeBusiness) {
-
-      table.innerHTML = `
-        <tr>
-          <td colspan="6" class="empty">
-            Belum ada usaha aktif.
-          </td>
-        </tr>
-      `;
-
-      return;
+      render();
 
     }
+  );
 
 
-    const accounts =
-      getActiveAccounts();
+/* =====================================================
+   EDIT AKUN
+===================================================== */
+
+function editAccount(id){
+
+  const business =
+    getActiveBusiness();
 
 
-    // Urutkan berdasarkan kode
-
-    accounts.sort(
-      (a, b) =>
-        String(a.code)
-          .localeCompare(
-            String(b.code),
-            undefined,
-            {
-              numeric: true
-            }
-          )
+  const account =
+    getActiveAccounts().find(
+      item =>
+        idEqual(
+          item.id,
+          id
+        )
     );
 
 
-    if (accounts.length === 0) {
+  if(
+    !business ||
+    !account
+  ){
 
-      table.innerHTML = `
-        <tr>
-          <td colspan="6" class="empty">
-            Belum ada COA untuk usaha ini.
-          </td>
-        </tr>
-      `;
-
-      return;
-
-    }
-
-
-    accounts.forEach(
-      function(account, index) {
-
-        const row =
-          document.createElement("tr");
-
-
-        row.innerHTML = `
-
-          <td>
-            ${index + 1}
-          </td>
-
-          <td>
-            <strong>
-              ${escapeHTML(account.code)}
-            </strong>
-          </td>
-
-          <td>
-            ${escapeHTML(account.name)}
-          </td>
-
-          <td>
-            ${escapeHTML(account.group)}
-          </td>
-
-          <td>
-
-            ${
-              account.normalBalance === "Debit"
-
-              ? `
-                <span class="badge badge-debit">
-                  Debit
-                </span>
-              `
-
-              : `
-                <span class="badge badge-credit">
-                  Kredit
-                </span>
-              `
-            }
-
-          </td>
-
-          <td>
-
-            <button
-              class="btn-edit"
-              onclick="editAccount(${account.id})"
-            >
-              ✏️ Edit
-            </button>
-
-            <button
-              class="btn-delete"
-              onclick="deleteAccount(${account.id})"
-            >
-              🗑️ Hapus
-            </button>
-
-          </td>
-
-        `;
-
-
-        table.appendChild(row);
-
-      }
+    alert(
+      "Akun tidak ditemukan pada usaha aktif."
     );
 
-  } 
+    return;
 
-
-  // ==========================================
-  // ESCAPE HTML
-  // ==========================================
-
-  function escapeHTML(value) {
-    return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
   }
 
 
-  // ==========================================
-  // INISIALISASI
-  // ==========================================
+  editingId =
+    account.id;
 
-  function init() {
-    migrateOldAccounts();
-    renderActiveBusiness();
-    renderAccounts();
+
+  document
+    .getElementById("accountCode")
+    .value =
+      account.code || "";
+
+
+  document
+    .getElementById("accountName")
+    .value =
+      account.name || "";
+
+
+  document
+    .getElementById("accountGroup")
+    .value =
+      account.group || "";
+
+
+  document
+    .getElementById("normalBalance")
+    .value =
+      account.normalBalance || "";
+
+
+  document
+    .getElementById("formTitle")
+    .textContent =
+      "✏️ Edit Akun";
+
+
+  document
+    .getElementById("saveButton")
+    .textContent =
+      "Update Akun";
+
+
+  document
+    .getElementById("cancelButton")
+    .style.display =
+      "inline-block";
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =====================================================
+   HAPUS AKUN
+===================================================== */
+
+function deleteAccount(id){
+
+  const business =
+    getActiveBusiness();
+
+
+  if(!business){
+
+    return;
+
   }
 
-  init();
+
+  const accounts =
+    getAccounts();
+
+
+  const index =
+    accounts.findIndex(
+      account =>
+        idEqual(
+          account.id,
+          id
+        )
+        &&
+        idEqual(
+          account.businessId,
+          business.id
+        )
+    );
+
+
+  if(index < 0){
+
+    alert(
+      "Akun tidak ditemukan pada usaha aktif."
+    );
+
+    return;
+
+  }
+
+
+  const account =
+    accounts[index];
+
+
+  const confirmed =
+    confirm(
+      `Yakin ingin menghapus akun "${account.code} - ${account.name}"?`
+    );
+
+
+  if(!confirmed){
+
+    return;
+
+  }
+
+
+  accounts.splice(
+    index,
+    1
+  );
+
+
+  saveAccounts(
+    accounts
+  );
+
+
+  if(
+    idEqual(
+      editingId,
+      id
+    )
+  ){
+
+    resetForm();
+
+  }
+
+
+  render();
+
+}
+
+
+/* =====================================================
+   BATAL EDIT
+===================================================== */
+
+document
+  .getElementById("cancelButton")
+  .addEventListener(
+    "click",
+    resetForm
+  );
+
+
+/* =====================================================
+   RENDER TABLE
+===================================================== */
+
+function render(){
+
+  /*
+    Pastikan akun lama memiliki
+    businessId.
+  */
+
+  migrateLegacyAccounts();
+
+
+  renderActive();
+
+
+  const table =
+    document.getElementById(
+      "accountTable"
+    );
+
+
+  let accounts =
+    getActiveAccounts();
+
+
+  /*
+    Urutkan berdasarkan kode akun.
+  */
+
+  accounts.sort(
+    (a,b) =>
+      String(a.code).localeCompare(
+        String(b.code),
+        undefined,
+        {
+          numeric:true
+        }
+      )
+  );
+
+
+  table.innerHTML = "";
+
+
+  if(
+    accounts.length === 0
+  ){
+
+    table.innerHTML = `
+      <tr>
+        <td
+          colspan="6"
+          class="empty"
+        >
+          Belum ada COA untuk usaha aktif.
+        </td>
+      </tr>
+    `;
+
+    return;
+
+  }
+
+
+  accounts.forEach(
+    (account,index) => {
+
+      const row =
+        document.createElement(
+          "tr"
+        );
+
+
+      row.innerHTML = `
+
+        <td>
+          ${index + 1}
+        </td>
+
+        <td>
+          <strong>
+            ${escapeHTML(
+              account.code
+            )}
+          </strong>
+        </td>
+
+        <td>
+          ${escapeHTML(
+            account.name
+          )}
+        </td>
+
+        <td>
+          ${escapeHTML(
+            account.group
+          )}
+        </td>
+
+        <td>
+          ${escapeHTML(
+            account.normalBalance
+          )}
+        </td>
+
+        <td>
+
+          <button
+            class="btn-edit"
+            onclick="editAccount('${escapeHTML(account.id)}')"
+          >
+            ✏️ Edit
+          </button>
+
+          <button
+            class="btn-delete"
+            onclick="deleteAccount('${escapeHTML(account.id)}')"
+          >
+            🗑️ Hapus
+          </button>
+
+        </td>
+
+      `;
+
+
+      table.appendChild(
+        row
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+render();
 
 </script>
 
 </body>
-</html>  
+      </html>
