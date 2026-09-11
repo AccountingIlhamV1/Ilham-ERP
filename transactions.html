@@ -16,8 +16,26 @@
     }
 
     .container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: auto;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 10px 15px;
+      background: #222;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
     }
 
     h1 {
@@ -27,14 +45,6 @@
     .subtitle {
       color: #666;
       margin-bottom: 20px;
-    }
-
-    .card {
-      background: white;
-      padding: 22px;
-      border-radius: 15px;
-      margin-bottom: 20px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
     }
 
     label {
@@ -62,14 +72,11 @@
     }
 
     button {
-      width: 100%;
-      margin-top: 20px;
-      padding: 14px;
       border: none;
       border-radius: 8px;
+      padding: 12px 15px;
       background: #222;
       color: white;
-      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
     }
@@ -78,31 +85,24 @@
       opacity: 0.85;
     }
 
-    .back {
-      display: inline-block;
-      margin-bottom: 20px;
-      text-decoration: none;
-      background: #222;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 8px;
-    }
-
-    .preview {
-      background: #f1f3f5;
-      padding: 15px;
-      border-radius: 10px;
+    .save-button {
+      width: 100%;
       margin-top: 20px;
+      padding: 15px;
+      font-size: 16px;
     }
 
-    .preview div {
-      padding: 7px 0;
+    .danger {
+      background: #c62828;
     }
 
     .status {
-      padding: 12px;
+      padding: 13px;
       border-radius: 8px;
       margin-bottom: 15px;
+    }
+
+    .success {
       background: #e8f5e9;
       color: #1b5e20;
     }
@@ -112,16 +112,35 @@
       color: #856404;
     }
 
+    .error {
+      background: #ffebee;
+      color: #b71c1c;
+    }
+
+    .preview {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 10px;
+      background: #f1f3f5;
+    }
+
+    .preview-row {
+      padding: 7px 0;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 15px;
-      min-width: 700px;
+      min-width: 800px;
     }
 
     th,
     td {
-      padding: 10px;
+      padding: 11px;
       border-bottom: 1px solid #ddd;
       text-align: left;
     }
@@ -130,16 +149,15 @@
       background: #f1f3f5;
     }
 
-    .table-wrapper {
-      overflow-x: auto;
+    .empty {
+      text-align: center;
+      color: #777;
+      padding: 25px;
     }
 
-    .delete {
-      background: #c62828;
-      padding: 7px 10px;
-      margin: 0;
-      width: auto;
-      font-size: 13px;
+    .amount {
+      text-align: right;
+      white-space: nowrap;
     }
   </style>
 </head>
@@ -162,13 +180,17 @@
   <div id="status"></div>
 
 
-  <!-- FORM TRANSAKSI -->
+  <!-- =========================================
+       FORM TRANSAKSI
+       ========================================= -->
 
   <div class="card">
 
     <h2>Input Transaksi</h2>
 
-    <label>Tanggal</label>
+    <label for="date">
+      Tanggal
+    </label>
 
     <input
       type="date"
@@ -176,17 +198,21 @@
     >
 
 
-    <label>Nominal Transaksi</label>
+    <label for="amount">
+      Nominal Transaksi
+    </label>
 
     <input
       type="number"
       id="amount"
-      placeholder="Contoh: 20000000"
       min="0"
+      placeholder="Contoh: 20000000"
     >
 
 
-    <label>Keterangan Transaksi</label>
+    <label for="description">
+      Keterangan Transaksi
+    </label>
 
     <textarea
       id="description"
@@ -194,7 +220,11 @@
     ></textarea>
 
 
-    <label>Akun Debit</label>
+    <!-- AKUN DEBIT -->
+
+    <label for="debitAccount">
+      Akun Debit
+    </label>
 
     <select id="debitAccount">
 
@@ -205,7 +235,11 @@
     </select>
 
 
-    <label>Akun Kredit</label>
+    <!-- AKUN KREDIT -->
+
+    <label for="creditAccount">
+      Akun Kredit
+    </label>
 
     <select id="creditAccount">
 
@@ -216,40 +250,57 @@
     </select>
 
 
+    <!-- PREVIEW -->
+
     <div class="preview">
 
-      <strong>Preview Jurnal</strong>
+      <strong>
+        Preview Jurnal
+      </strong>
 
-      <div>
+      <div class="preview-row">
         Debit:
-        <span id="previewDebit">-</span>
+        <span id="previewDebit">
+          -
+        </span>
       </div>
 
-      <div>
+      <div class="preview-row">
         Kredit:
-        <span id="previewCredit">-</span>
+        <span id="previewCredit">
+          -
+        </span>
       </div>
 
-      <div>
+      <div class="preview-row">
         Nominal:
-        <span id="previewAmount">Rp0</span>
+        <span id="previewAmount">
+          Rp0
+        </span>
       </div>
 
     </div>
 
 
-    <button onclick="saveTransaction()">
+    <button
+      class="save-button"
+      onclick="saveTransaction()"
+    >
       + SIMPAN TRANSAKSI
     </button>
 
   </div>
 
 
-  <!-- DAFTAR TRANSAKSI -->
+  <!-- =========================================
+       DAFTAR TRANSAKSI
+       ========================================= -->
 
   <div class="card">
 
-    <h2>Daftar Transaksi</h2>
+    <h2>
+      Daftar Transaksi
+    </h2>
 
     <div class="table-wrapper">
 
@@ -258,6 +309,7 @@
         <thead>
 
           <tr>
+            <th>No</th>
             <th>Tanggal</th>
             <th>Keterangan</th>
             <th>Debit</th>
@@ -281,364 +333,649 @@
 
 <script>
 
-  // ==========================================
-  // AMBIL COA
-  // ==========================================
+/* =================================================
+   DATABASE COA PUSAT
+   ================================================= */
 
-  let accounts =
-    JSON.parse(
-      localStorage.getItem("ilhamERP_accounts")
-    ) || [];
+const ACCOUNT_STORAGE_KEY =
+  "ilhamERP_accounts";
 
 
-  // ==========================================
-  // AMBIL TRANSAKSI
-  // ==========================================
+/* =================================================
+   DATABASE TRANSAKSI
+   ================================================= */
 
-  let transactions =
-    JSON.parse(
-      localStorage.getItem("ilhamERP_transactions")
-    ) || [];
+const TRANSACTION_STORAGE_KEY =
+  "ilhamERP_transactions";
 
 
-  // ==========================================
-  // FORMAT RUPIAH
-  // ==========================================
+/* =================================================
+   AMBIL COA
+   ================================================= */
 
-  function formatRupiah(number) {
+function getAccounts() {
 
-    return new Intl.NumberFormat("id-ID", {
+  try {
+
+    const data =
+      localStorage.getItem(
+        ACCOUNT_STORAGE_KEY
+      );
+
+    if (!data) {
+      return [];
+    }
+
+    const parsed =
+      JSON.parse(data);
+
+    return Array.isArray(parsed)
+      ? parsed
+      : [];
+
+  } catch (error) {
+
+    console.error(
+      "Gagal membaca COA:",
+      error
+    );
+
+    return [];
+
+  }
+
+}
+
+
+/* =================================================
+   AMBIL TRANSAKSI
+   ================================================= */
+
+function getTransactions() {
+
+  try {
+
+    const data =
+      localStorage.getItem(
+        TRANSACTION_STORAGE_KEY
+      );
+
+    if (!data) {
+      return [];
+    }
+
+    const parsed =
+      JSON.parse(data);
+
+    return Array.isArray(parsed)
+      ? parsed
+      : [];
+
+  } catch (error) {
+
+    console.error(
+      "Gagal membaca transaksi:",
+      error
+    );
+
+    return [];
+
+  }
+
+}
+
+
+let transactions =
+  getTransactions();
+
+
+/* =================================================
+   FORMAT RUPIAH
+   ================================================= */
+
+function formatRupiah(number) {
+
+  return new Intl.NumberFormat(
+    "id-ID",
+    {
       style: "currency",
       currency: "IDR",
       maximumFractionDigits: 0
-    }).format(number);
-
-  }
-
-
-  // ==========================================
-  // ISI DROPDOWN AKUN
-  // ==========================================
-
-  function loadAccounts() {
-
-    const debit =
-      document.getElementById("debitAccount");
-
-    const credit =
-      document.getElementById("creditAccount");
-
-
-    debit.innerHTML =
-      `<option value="">-- Pilih Akun Debit --</option>`;
-
-    credit.innerHTML =
-      `<option value="">-- Pilih Akun Kredit --</option>`;
-
-
-    if (accounts.length === 0) {
-
-      document.getElementById("status").innerHTML = `
-        <div class="status warning">
-          ⚠️ Belum ada akun yang terbaca dari Chart of Accounts.
-        </div>
-      `;
-
-      return;
     }
+  ).format(number);
 
+}
 
-    document.getElementById("status").innerHTML = `
-      <div class="status">
-        ✅ ${accounts.length} akun berhasil terbaca dari Chart of Accounts.
-      </div>
-    `;
 
+/* =================================================
+   ISI DROPDOWN DARI COA
+   ================================================= */
 
-    accounts.forEach(account => {
+function loadAccounts() {
 
-      const code =
-        account.code || account.kode || "";
+  const accounts =
+    getAccounts();
 
-      const name =
-        account.name || account.nama || "";
 
-      const group =
-        account.type ||
-        account.kelompok ||
-        account.group ||
-        "";
+  const debitSelect =
+    document.getElementById(
+      "debitAccount"
+    );
 
-
-      const text =
-        code + " - " + name +
-        (group ? " (" + group + ")" : "");
-
-
-      const optionDebit =
-        document.createElement("option");
-
-      optionDebit.value = code;
-
-      optionDebit.textContent = text;
-
-      debit.appendChild(optionDebit);
-
-
-      const optionCredit =
-        document.createElement("option");
-
-      optionCredit.value = code;
-
-      optionCredit.textContent = text;
-
-      credit.appendChild(optionCredit);
-
-    });
-
-  }
-
-
-  // ==========================================
-  // PREVIEW
-  // ==========================================
-
-  function updatePreview() {
-
-    const debitCode =
-      document.getElementById("debitAccount").value;
-
-    const creditCode =
-      document.getElementById("creditAccount").value;
-
-    const amount =
-      Number(
-        document.getElementById("amount").value
-      ) || 0;
-
-
-    const debitAccount =
-      accounts.find(
-        account =>
-          (account.code || account.kode) === debitCode
-      );
-
-
-    const creditAccount =
-      accounts.find(
-        account =>
-          (account.code || account.kode) === creditCode
-      );
-
-
-    document.getElementById("previewDebit").textContent =
-      debitAccount
-        ? debitCode + " - " +
-          (debitAccount.name || debitAccount.nama)
-        : "-";
-
-
-    document.getElementById("previewCredit").textContent =
-      creditAccount
-        ? creditCode + " - " +
-          (creditAccount.name || creditAccount.nama)
-        : "-";
-
-
-    document.getElementById("previewAmount").textContent =
-      formatRupiah(amount);
-
-  }
-
-
-  // ==========================================
-  // SIMPAN TRANSAKSI
-  // ==========================================
-
-  function saveTransaction() {
-
-    const date =
-      document.getElementById("date").value;
-
-    const amount =
-      Number(
-        document.getElementById("amount").value
-      );
-
-    const description =
-      document.getElementById("description").value.trim();
-
-    const debitCode =
-      document.getElementById("debitAccount").value;
-
-    const creditCode =
-      document.getElementById("creditAccount").value;
-
-
-    if (!date) {
-      alert("Tanggal belum dipilih.");
-      return;
-    }
-
-
-    if (!amount || amount <= 0) {
-      alert("Nominal transaksi harus lebih dari 0.");
-      return;
-    }
-
-
-    if (!description) {
-      alert("Keterangan transaksi belum diisi.");
-      return;
-    }
-
-
-    if (!debitCode) {
-      alert("Pilih akun Debit.");
-      return;
-    }
-
-
-    if (!creditCode) {
-      alert("Pilih akun Kredit.");
-      return;
-    }
-
-
-    if (debitCode === creditCode) {
-      alert("Akun Debit dan Kredit tidak boleh sama.");
-      return;
-    }
-
-
-    const debitAccount =
-      accounts.find(
-        account =>
-          (account.code || account.kode) === debitCode
-      );
-
-
-    const creditAccount =
-      accounts.find(
-        account =>
-          (account.code || account.kode) === creditCode
-      );
-
-
-    const transaction = {
-
-      id: Date.now(),
-
-      date: date,
-
-      amount: amount,
-
-      description: description,
-
-      debitCode: debitCode,
-
-      debitName:
-        debitAccount.name ||
-        debitAccount.nama,
-
-      creditCode: creditCode,
-
-      creditName:
-        creditAccount.name ||
-        creditAccount.nama
-
-    };
-
-
-    transactions.push(transaction);
-
-
-    localStorage.setItem(
-      "ilhamERP_transactions",
-      JSON.stringify(transactions)
+  const creditSelect =
+    document.getElementById(
+      "creditAccount"
     );
 
 
-    alert("✅ Transaksi berhasil disimpan.");
+  debitSelect.innerHTML = `
+    <option value="">
+      -- Pilih Akun Debit --
+    </option>
+  `;
 
 
-    document.getElementById("amount").value = "";
-
-    document.getElementById("description").value = "";
-
-    document.getElementById("debitAccount").value = "";
-
-    document.getElementById("creditAccount").value = "";
+  creditSelect.innerHTML = `
+    <option value="">
+      -- Pilih Akun Kredit --
+    </option>
+  `;
 
 
-    updatePreview();
+  /* ---------------------------------------------
+     CEK COA
+     --------------------------------------------- */
 
-    renderTransactions();
+  if (accounts.length === 0) {
+
+    showStatus(
+      "⚠️ COA belum memiliki akun. " +
+      "Silakan tambahkan akun melalui Chart of Accounts.",
+      "warning"
+    );
+
+    return;
 
   }
 
 
-  // ==========================================
-  // TAMPILKAN TRANSAKSI
-  // ==========================================
+  /* ---------------------------------------------
+     MASUKKAN SEMUA AKUN
+     --------------------------------------------- */
 
-  function renderTransactions() {
+  accounts.forEach(account => {
 
-    const table =
-      document.getElementById("transactionTable");
+    const code =
+      String(
+        account.code || ""
+      );
+
+    const name =
+      String(
+        account.name || ""
+      );
+
+    const group =
+      String(
+        account.group || ""
+      );
+
+    const normal =
+      String(
+        account.normalBalance || ""
+      );
 
 
-    table.innerHTML = "";
-
-
-    if (transactions.length === 0) {
-
-      table.innerHTML = `
-        <tr>
-          <td colspan="6"
-              style="text-align:center;color:#777;">
-            Belum ada transaksi.
-          </td>
-        </tr>
-      `;
-
+    if (!code || !name) {
       return;
     }
 
 
-    transactions.forEach((transaction, index) => {
+    const text =
+      code +
+      " - " +
+      name +
+      " | " +
+      group +
+      " | Normal " +
+      normal;
+
+
+    /* DEBIT */
+
+    const debitOption =
+      document.createElement(
+        "option"
+      );
+
+    debitOption.value =
+      code;
+
+    debitOption.textContent =
+      text;
+
+    debitSelect.appendChild(
+      debitOption
+    );
+
+
+    /* KREDIT */
+
+    const creditOption =
+      document.createElement(
+        "option"
+      );
+
+    creditOption.value =
+      code;
+
+    creditOption.textContent =
+      text;
+
+    creditSelect.appendChild(
+      creditOption
+    );
+
+  });
+
+
+  showStatus(
+    "✅ " +
+    accounts.length +
+    " akun COA berhasil dimuat otomatis.",
+    "success"
+  );
+
+}
+
+
+/* =================================================
+   PREVIEW JURNAL
+   ================================================= */
+
+function updatePreview() {
+
+  const accounts =
+    getAccounts();
+
+
+  const debitCode =
+    document.getElementById(
+      "debitAccount"
+    ).value;
+
+
+  const creditCode =
+    document.getElementById(
+      "creditAccount"
+    ).value;
+
+
+  const amount =
+    Number(
+      document.getElementById(
+        "amount"
+      ).value
+    ) || 0;
+
+
+  const debit =
+    accounts.find(
+      account =>
+        String(account.code) ===
+        String(debitCode)
+    );
+
+
+  const credit =
+    accounts.find(
+      account =>
+        String(account.code) ===
+        String(creditCode)
+    );
+
+
+  document.getElementById(
+    "previewDebit"
+  ).textContent =
+    debit
+      ? debit.code +
+        " - " +
+        debit.name
+      : "-";
+
+
+  document.getElementById(
+    "previewCredit"
+  ).textContent =
+    credit
+      ? credit.code +
+        " - " +
+        credit.name
+      : "-";
+
+
+  document.getElementById(
+    "previewAmount"
+  ).textContent =
+    formatRupiah(amount);
+
+}
+
+
+/* =================================================
+   SIMPAN TRANSAKSI
+   ================================================= */
+
+function saveTransaction() {
+
+  const accounts =
+    getAccounts();
+
+
+  const date =
+    document.getElementById(
+      "date"
+    ).value;
+
+
+  const amount =
+    Number(
+      document.getElementById(
+        "amount"
+      ).value
+    );
+
+
+  const description =
+    document.getElementById(
+      "description"
+    ).value.trim();
+
+
+  const debitCode =
+    document.getElementById(
+      "debitAccount"
+    ).value;
+
+
+  const creditCode =
+    document.getElementById(
+      "creditAccount"
+    ).value;
+
+
+  /* VALIDASI */
+
+  if (!date) {
+
+    alert(
+      "Tanggal belum dipilih."
+    );
+
+    return;
+
+  }
+
+
+  if (
+    !amount ||
+    amount <= 0
+  ) {
+
+    alert(
+      "Nominal harus lebih dari 0."
+    );
+
+    return;
+
+  }
+
+
+  if (!description) {
+
+    alert(
+      "Keterangan transaksi belum diisi."
+    );
+
+    return;
+
+  }
+
+
+  if (!debitCode) {
+
+    alert(
+      "Silakan pilih akun Debit."
+    );
+
+    return;
+
+  }
+
+
+  if (!creditCode) {
+
+    alert(
+      "Silakan pilih akun Kredit."
+    );
+
+    return;
+
+  }
+
+
+  if (
+    debitCode ===
+    creditCode
+  ) {
+
+    alert(
+      "Akun Debit dan Kredit tidak boleh sama."
+    );
+
+    return;
+
+  }
+
+
+  /* CARI AKUN */
+
+  const debit =
+    accounts.find(
+      account =>
+        String(account.code) ===
+        String(debitCode)
+    );
+
+
+  const credit =
+    accounts.find(
+      account =>
+        String(account.code) ===
+        String(creditCode)
+    );
+
+
+  if (!debit || !credit) {
+
+    alert(
+      "Akun tidak ditemukan di COA."
+    );
+
+    return;
+
+  }
+
+
+  /* BUAT TRANSAKSI */
+
+  const transaction = {
+
+    id: Date.now(),
+
+    date: date,
+
+    description: description,
+
+    amount: amount,
+
+    debitCode: debit.code,
+
+    debitName: debit.name,
+
+    debitGroup: debit.group,
+
+    creditCode: credit.code,
+
+    creditName: credit.name,
+
+    creditGroup: credit.group
+
+  };
+
+
+  /* AMBIL DATA TERBARU */
+
+  transactions =
+    getTransactions();
+
+
+  transactions.push(
+    transaction
+  );
+
+
+  /* SIMPAN */
+
+  localStorage.setItem(
+
+    TRANSACTION_STORAGE_KEY,
+
+    JSON.stringify(
+      transactions
+    )
+
+  );
+
+
+  alert(
+    "✅ Transaksi berhasil disimpan."
+  );
+
+
+  /* RESET */
+
+  document.getElementById(
+    "amount"
+  ).value = "";
+
+
+  document.getElementById(
+    "description"
+  ).value = "";
+
+
+  document.getElementById(
+    "debitAccount"
+  ).value = "";
+
+
+  document.getElementById(
+    "creditAccount"
+  ).value = "";
+
+
+  updatePreview();
+
+  renderTransactions();
+
+}
+
+
+/* =================================================
+   TAMPILKAN TRANSAKSI
+   ================================================= */
+
+function renderTransactions() {
+
+  transactions =
+    getTransactions();
+
+
+  const table =
+    document.getElementById(
+      "transactionTable"
+    );
+
+
+  table.innerHTML = "";
+
+
+  if (
+    transactions.length === 0
+  ) {
+
+    table.innerHTML = `
+      <tr>
+        <td
+          colspan="7"
+          class="empty"
+        >
+          Belum ada transaksi.
+        </td>
+      </tr>
+    `;
+
+    return;
+
+  }
+
+
+  transactions.forEach(
+    (transaction, index) => {
 
       table.innerHTML += `
 
         <tr>
 
           <td>
-            ${transaction.date}
+            ${index + 1}
           </td>
 
           <td>
-            ${transaction.description}
+            ${transaction.date || "-"}
           </td>
 
           <td>
-            ${transaction.debitCode}
-            - ${transaction.debitName || ""}
+            ${transaction.description || "-"}
           </td>
 
           <td>
-            ${transaction.creditCode}
-            - ${transaction.creditName || ""}
+            ${transaction.debitCode || ""}
+            -
+            ${transaction.debitName || ""}
           </td>
 
           <td>
-            ${formatRupiah(transaction.amount)}
+            ${transaction.creditCode || ""}
+            -
+            ${transaction.creditName || ""}
+          </td>
+
+          <td class="amount">
+            ${formatRupiah(
+              Number(transaction.amount) || 0
+            )}
           </td>
 
           <td>
 
             <button
-              class="delete"
-              onclick="deleteTransaction(${index})"
+              class="danger"
+              onclick="
+                deleteTransaction(${index})
+              "
             >
               Hapus
             </button>
@@ -649,75 +986,137 @@
 
       `;
 
-    });
-
-  }
-
-
-  // ==========================================
-  // HAPUS TRANSAKSI
-  // ==========================================
-
-  function deleteTransaction(index) {
-
-    if (
-      !confirm("Hapus transaksi ini?")
-    ) {
-      return;
     }
+  );
+
+}
 
 
-    transactions.splice(index, 1);
+/* =================================================
+   HAPUS TRANSAKSI
+   ================================================= */
+
+function deleteTransaction(index) {
+
+  transactions =
+    getTransactions();
 
 
-    localStorage.setItem(
-      "ilhamERP_transactions",
-      JSON.stringify(transactions)
-    );
-
-
-    renderTransactions();
-
+  if (
+    !transactions[index]
+  ) {
+    return;
   }
 
 
-  // ==========================================
-  // EVENT
-  // ==========================================
-
-  document
-    .getElementById("debitAccount")
-    .addEventListener(
-      "change",
-      updatePreview
+  const confirmDelete =
+    confirm(
+      "Hapus transaksi ini?"
     );
 
 
-  document
-    .getElementById("creditAccount")
-    .addEventListener(
-      "change",
-      updatePreview
-    );
+  if (!confirmDelete) {
+    return;
+  }
 
 
-  document
-    .getElementById("amount")
-    .addEventListener(
-      "input",
-      updatePreview
-    );
+  transactions.splice(
+    index,
+    1
+  );
 
 
-  // ==========================================
-  // JALANKAN
-  // ==========================================
+  localStorage.setItem(
 
-  loadAccounts();
+    TRANSACTION_STORAGE_KEY,
+
+    JSON.stringify(
+      transactions
+    )
+
+  );
+
 
   renderTransactions();
+
+}
+
+
+/* =================================================
+   STATUS
+   ================================================= */
+
+function showStatus(
+  message,
+  type
+) {
+
+  const status =
+    document.getElementById(
+      "status"
+    );
+
+
+  status.innerHTML = `
+    <div class="status ${type}">
+      ${message}
+    </div>
+  `;
+
+
+  setTimeout(
+    () => {
+      status.innerHTML = "";
+    },
+    4000
+  );
+
+}
+
+
+/* =================================================
+   EVENT
+   ================================================= */
+
+document
+  .getElementById(
+    "debitAccount"
+  )
+  .addEventListener(
+    "change",
+    updatePreview
+  );
+
+
+document
+  .getElementById(
+    "creditAccount"
+  )
+  .addEventListener(
+    "change",
+    updatePreview
+  );
+
+
+document
+  .getElementById(
+    "amount"
+  )
+  .addEventListener(
+    "input",
+    updatePreview
+  );
+
+
+/* =================================================
+   JALANKAN
+   ================================================= */
+
+loadAccounts();
+
+renderTransactions();
 
 </script>
 
 </body>
-        </html>
+  </html>
