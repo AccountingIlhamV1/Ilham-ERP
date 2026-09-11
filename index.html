@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ilham ERP - Accounting Learning System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #1f2937;
+        }
+
+        .header {
+            background: #111827;
+            color: white;
+            padding: 28px 20px;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .header p {
+            margin: 8px 0 0;
+            color: #d1d5db;
+        }
+
+        .welcome {
+            background: white;
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .welcome h2 {
+            margin-top: 0;
+        }
+
+        .welcome p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-top: 25px;
+            margin-bottom: 40px;
+        }
+
+        .module {
+            background: white;
+            padding: 22px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: #1f2937;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            transition: 0.2s;
+        }
+
+        .module:hover {
+            transform: translateY(-3px);
+        }
+
+        .icon {
+            font-size: 32px;
+        }
+
+        .module h3 {
+            margin: 12px 0 8px;
+        }
+
+        .module p {
+            color: #6b7280;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .badge {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 6px 10px;
+            background: #e5e7eb;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .active .badge {
+            background: #111827;
+            color: white;
+        }
+
+        .coming {
+            opacity: 0.55;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 25px;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        @media (max-width: 650px) {
+            .modules {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="container">
+
+            <h1>📊 Ilham ERP</h1>
+
+            <p>
+                Accounting Learning System
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN -->
+
+    <div class="container">
+
+        <!-- WELCOME -->
+
+        <div class="welcome">
+
+            <h2>
+                Selamat datang 👋
+            </h2>
+
+            <p>
+                Sistem simulasi akuntansi untuk membantu
+                mahasiswa memahami proses akuntansi secara
+                terintegrasi, mulai dari transaksi sampai
+                laporan keuangan.
+            </p>
+
+            <p>
+                <strong>
+                    Target:
+                </strong>
+                Intermediate Accounting
+            </p>
+
+        </div>
+
+
+        <!-- MODULES -->
+
+        <div class="modules">
+
+
+            <!-- CHART OF ACCOUNTS -->
+
+            <a href="accounts.html" class="module active">
+
+                <div class="icon">
+                    📋
+                </div>
+
+                <h3>
+                    Chart of Accounts
+                </h3>
+
+                <p>
+                    Kelola daftar akun perusahaan seperti
+                    kas, piutang, persediaan, aset tetap,
+                    utang, modal, pendapatan, dan beban.
+                </p>
+
+                <span class="badge">
+                    MULAI
+                </span>
+
+            </a>
+
+
+            <!-- TRANSAKSI -->
+
+            <div class="module coming">
+
+                <div class="icon">
+                    🧾
+                </div>
+
+                <h3>
+                    Transaksi
+                </h3>
+
+                <p>
+                    Input transaksi perusahaan dan
+                    tentukan kondisi transaksi.
+                </p>
+
+                <span class="badge">
+                    SEGERA
+                </span>
+
+            </div>
+
+
+            <!-- JURNAL -->
+
+            <div class="module coming">
+
+                <div class="icon">
+                    📖
+                </div>
+
+                <h3>
+                    Jurnal Umum
+                </h3>
+
+                <p>
+                    Sistem menghasilkan jurnal berdasarkan
+                    transaksi yang telah dimasukkan.
+                </p>
+
+                <span class="badge">
+                    SEGERA
+                </span>
+
+            </div>
+
+
+            <!-- BUKU BESAR -->
+
+            <div class="module coming">
+
+                <div class="icon">
+                    📚
+                </div>
+
+                <h3>
+                    Buku Besar
+                </h3>
+
+                <p>
+                    Melihat mutasi dan saldo setiap akun
+                    secara otomatis.
+                </p>
+
+                <span class="badge">
+                    SEGERA
+                </span>
+
+            </div>
+
+
+            <!-- NERACA SALDO -->
+
+            <div class="module coming">
+
+                <div class="icon">
+                    ⚖️
+                </div>
+
+                <h3>
+                    Neraca Saldo
+                </h3>
+
+                <p>
+                    Menampilkan saldo debit dan kredit
+                    seluruh akun.
+                </p>
+
+                <span class="badge">
+                    SEGERA
+                </span>
+
+            </div>
+
+
+            <!-- PENYESUAIAN -->
+
+            <div class="module coming">
+
+                <div class="icon">
+                    🔧
+                </div>
+
+                <h3>
+                    Jurnal Penyesuaian
+                </h3>
+
+                <p>
+                    Catat penyusutan, prepaid expense,
+                    accrued expense, deferred revenue,
+                    dan penyesuaian lainnya.
+                </p>
+
+                <span class="badge">
+                    SEGERA
+                </span>
+
+            </div>
+
+
+            <!-- LAPORAN KEUANGAN -->
+
+            <div class="module coming">
+
+                <div class="icon">
+                    📊
+                </div>
+
+                <h3>
+                    Laporan Keuangan
+                </h3>
+
+                <p>
+                    Menghasilkan laporan laba rugi,
+                    perubahan ekuitas, posisi keuangan,
+                    dan arus kas.
+                </p>
+
+                <span class="badge">
+                    SEGERA
+                </span>
+
+            </div>
+
+
+            <!-- PSAK -->
+
+            <div class="module coming">
+
+                <div class="icon">
+                    📑
+                </div>
+
+                <h3>
+                    PSAK 115
+                </h3>
+
+                <p>
+                    Modul pembelajaran pendapatan dari
+                    kontrak dengan pelanggan.
+                </p>
+
+                <span class="badge">
+                    SEGERA
+                </span>
+
+            </div>
+
+
+            <!-- EXCEL -->
+
+            <div class="module coming">
+
+                <div class="icon">
+                    📥
+                </div>
+
+                <h3>
+                    Export Excel
+                </h3>
+
+                <p>
+                    Export jurnal, buku besar, neraca saldo,
+                    dan laporan keuangan ke Excel.
+                </p>
+
+                <span class="badge">
+                    SEGERA
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!--
