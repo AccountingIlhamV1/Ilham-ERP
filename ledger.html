@@ -145,12 +145,37 @@
   // AMBIL DATA
   // ==============================
 
-  const accounts =
-    JSON.parse(localStorage.getItem("ilhamERP_accounts")) || [];
+  const ACTIVE_BUSINESS_KEY = "ilhamERP_activeBusiness";
+const ACCOUNT_KEY = "ilhamERP_accounts";
+const TRANSACTION_KEY = "ilhamERP_transactions";
 
-  const transactions =
-    JSON.parse(localStorage.getItem("ilhamERP_transactions")) || [];
+const activeBusiness = JSON.parse(
+  localStorage.getItem(ACTIVE_BUSINESS_KEY)
+);
 
+const allAccounts = JSON.parse(
+  localStorage.getItem(ACCOUNT_KEY)
+) || [];
+
+const allTransactions = JSON.parse(
+  localStorage.getItem(TRANSACTION_KEY)
+) || [];
+
+const accounts = activeBusiness
+  ? allAccounts.filter(
+      account =>
+        String(account.businessId) ===
+        String(activeBusiness.id)
+    )
+  : [];
+
+const transactions = activeBusiness
+  ? allTransactions.filter(
+      transaction =>
+        String(transaction.businessId) ===
+        String(activeBusiness.id)
+    )
+  : [];
 
   // ==============================
   // FORMAT RUPIAH
