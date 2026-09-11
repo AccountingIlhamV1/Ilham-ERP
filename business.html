@@ -437,23 +437,16 @@
 
         };
 
+businesses.push(newBusiness);
 
-        businesses.push(newBusiness);
+saveBusinesses(businesses);
 
-        saveBusinesses(businesses);
-
-
-        // Kalau belum ada usaha aktif,
-        // otomatis pilih usaha pertama.
-
-        if (!localStorage.getItem(ACTIVE_KEY)) {
-
-          localStorage.setItem(
-            ACTIVE_KEY,
-            String(newBusiness.id)
-          );
-
-        }
+// Jadikan usaha baru sebagai usaha aktif
+localStorage.setItem(
+  ACTIVE_KEY,
+  String(newBusiness.id)
+);
+        
 
 
         alert("Usaha berhasil disimpan.");
