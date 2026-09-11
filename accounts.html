@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Chart of Accounts - Ilham ERP</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #1f2937;
+        }
+
+        .header {
+            background: #111827;
+            color: white;
+            padding: 22px 20px;
+        }
+
+        .container {
+            width: 94%;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .header p {
+            margin: 7px 0 0;
+            color: #d1d5db;
+        }
+
+        .back {
+            display: inline-block;
+            margin: 25px 0 15px;
+            color: #374151;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 18px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #111827;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        th {
+            background: #f3f4f6;
+        }
+
+        .delete-btn {
+            width: auto;
+            margin: 0;
+            padding: 7px 10px;
+            background: #dc2626;
+            font-size: 13px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 25px;
+            color: #6b7280;
+        }
+
+        .info {
+            background: #eff6ff;
+            padding: 15px;
+            border-radius: 10px;
+            color: #1e40af;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 650px) {
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="container">
+
+            <h1>
+                📋 Chart of Accounts
+            </h1>
+
+            <p>
+                Ilham ERP — Accounting Learning System
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="container">
+
+
+        <!-- BACK -->
+
+        <a
+            href="index.html"
+            class="back"
+        >
+            ← Kembali ke Dashboard
+        </a>
+
+
+        <!-- FORM -->
+
+        <div class="card">
+
+            <h2>
+                Tambah Akun
+            </h2>
+
+            <div class="info">
+
+                Chart of Accounts adalah daftar akun
+                yang digunakan perusahaan untuk mencatat
+                transaksi dan menyusun laporan keuangan.
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+                <div>
+
+                    <label>
+                        Kode Akun
+                    </label>
+
+                    <input
+                        type="text"
+                        id="accountCode"
+                        placeholder="Contoh: 1101"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Nama Akun
+                    </label>
+
+                    <input
+                        type="text"
+                        id="accountName"
+                        placeholder="Contoh: Kas"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Kelompok Akun
+                    </label>
+
+                    <select id="accountType">
+
+                        <option value="">
+                            -- Pilih Kelompok --
+                        </option>
+
+                        <option value="Aset">
+                            Aset
+                        </option>
+
+                        <option value="Liabilitas">
+                            Liabilitas
+                        </option>
+
+                        <option value="Ekuitas">
+                            Ekuitas
+                        </option>
+
+                        <option value="Pendapatan">
+                            Pendapatan
+                        </option>
+
+                        <option value="Beban">
+                            Beban
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Saldo Normal
+                    </label>
+
+                    <select id="normalBalance">
+
+                        <option value="Debit">
+                            Debit
+                        </option>
+
+                        <option value="Kredit">
+                            Kredit
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <button onclick="addAccount()">
+
+                + TAMBAH AKUN
+
+            </button>
+
+        </div>
+
+
+        <!-- TABLE -->
+
+        <div class="card">
+
+            <h2>
+                Daftar Akun
+            </h2>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                No
+                            </th>
+
+                            <th>
+                                Kode
+                            </th>
+
+                            <th>
+                                Nama Akun
+                            </th>
+
+                            <th>
+                                Kelompok
+                            </th>
+
+                            <th>
+                                Saldo Normal
+                            </th>
+
+                            <th>
+                                Aksi
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="accountTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+<script>
+
+
+// ======================================
+// DATA AKUN
+// ======================================
+
+let accounts =
+    JSON.parse(
+        localStorage.getItem("ilhamERP_accounts")
+    ) || [];
+
+
+// ======================================
+// TAMPILKAN AKUN
+// ======================================
+
+function renderAccounts() {
+
+    const table =
+        document.getElementById(
+            "accountTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    if (accounts.length === 0) {
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="empty"
+                >
+
+                    Belum ada akun.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+    }
+
+
+    accounts.forEach(
+        function(account, index) {
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+                    <strong>
+                        ${account.code}
+                    </strong>
+                </td>
+
+                <td>
+                    ${account.name}
+                </td>
+
+                <td>
+                    ${account.type}
+                </td>
+
+                <td>
+                    ${account.normalBalance}
+                </td>
+
+                <td>
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteAccount(${index})"
+                    >
+
+                        Hapus
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+            table.appendChild(row);
+
+        }
+    );
+
+}
+
+
+// ======================================
+// TAMBAH AKUN
+// ======================================
+
+function addAccount() {
+
+    const code =
+        document
+        .getElementById("accountCode")
+        .value
+        .trim();
+
+
+    const name =
+        document
+        .getElementById("accountName")
+        .value
+        .trim();
+
+
+    const type =
+        document
+        .getElementById("accountType")
+        .value;
+
+
+    const normalBalance =
+        document
+        .getElementById("normalBalance")
+        .value;
+
+
+    // VALIDASI
+
+    if (
+        code === "" ||
+        name === "" ||
+        type === ""
+    ) {
+
+        alert(
+            "Lengkapi seluruh data akun."
+        );
+
+        return;
+    }
+
+
+    // CEK KODE DUPLIKAT
+
+    const duplicate =
+        accounts.some(
+            function(account) {
+
+                return account.code === code;
+
+            }
+        );
+
+
+    if (duplicate) {
+
+        alert(
+            "Kode akun sudah digunakan."
+        );
+
+        return;
+    }
+
+
+    // TAMBAH AKUN
+
+    accounts.push({
+
+        code: code,
+
+        name: name,
+
+        type: type,
+
+        normalBalance: normalBalance
+
+    });
+
+
+    // SIMPAN
+
+    localStorage.setItem(
+        "ilhamERP_accounts",
+        JSON.stringify(accounts)
+    );
+
+
+    // RESET FORM
+
+    document.getElementById(
+        "accountCode"
+    ).value = "";
+
+
+    document.getElementById(
+        "accountName"
+    ).value = "";
+
+
+    document.getElementById(
+        "accountType"
+    ).value = "";
+
+
+    // UPDATE TABLE
+
+    renderAccounts();
+
+}
+
+
+// ======================================
+// HAPUS AKUN
+// ======================================
+
+function deleteAccount(index) {
+
+    const confirmDelete =
+        confirm(
+            "Hapus akun ini?"
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+
+    accounts.splice(
+        index,
+        1
+    );
+
+
+    localStorage.setItem(
+        "ilhamERP_accounts",
+        JSON.stringify(accounts)
+    );
+
+
+    renderAccounts();
+
+}
+
+
+// ======================================
+// LOAD
+// ======================================
+
+renderAccounts();
+
+
+</script>
+
+
+</body>
+  </html>
