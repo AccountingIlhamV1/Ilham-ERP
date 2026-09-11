@@ -1,108 +1,1029 @@
 <!DOCTYPE html>
-
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Data Usaha - Ilham ERP</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#222}
-header{background:#222;color:#fff;padding:25px 20px}
-header h1{margin:0 0 5px}
-header p{margin:0;color:#ddd}
-.container{max-width:1100px;margin:25px auto;padding:0 15px}
-.back{display:inline-block;margin-bottom:15px;text-decoration:none;color:#2563eb;font-weight:bold}
-.card{background:#fff;padding:20px;border-radius:12px;margin-bottom:20px;box-shadow:0 3px 12px rgba(0,0,0,.08)}
-.active-box{background:#ecfdf5;border:1px solid #86efac;padding:15px;border-radius:10px;margin-bottom:20px}
-.active-box strong{color:#166534}
-.active-name{display:block;margin-top:7px;font-size:18px;font-weight:bold}
-.warning{background:#fff7ed;border:1px solid #fdba74;padding:15px;border-radius:10px;margin-bottom:20px;color:#9a3412}
-.status{margin-bottom:15px;padding:10px;border-radius:8px;background:#f3f4f6;color:#555;font-size:14px}
-.info{color:#666;font-size:13px;line-height:1.5}
-label{display:block;font-weight:bold;margin-bottom:7px}
-input,select,textarea{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;font-size:15px;margin-bottom:15px;background:#fff}
-textarea{min-height:90px;resize:vertical;font-family:Arial,sans-serif}
-button{border:0;padding:11px 16px;border-radius:8px;font-size:14px;font-weight:bold;cursor:pointer;margin-right:5px;margin-bottom:5px}
-.btn-save{background:#2563eb;color:#fff}
-.btn-edit{background:#f59e0b;color:#fff}
-.btn-delete{background:#dc2626;color:#fff}
-.btn-cancel{background:#6b7280;color:#fff}
-.btn-active{background:#16a34a;color:#fff}
-.table-wrapper{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:850px}
-th,td{padding:12px;border-bottom:1px solid #ddd;text-align:left;vertical-align:top}
-th{background:#f3f4f6}
-.empty{text-align:center;color:#777;padding:25px}
-.active{color:#15803d;font-weight:bold}
-.badge{display:inline-block;padding:5px 9px;border-radius:6px;font-size:12px;font-weight:bold}
-.badge-debit{background:#dbeafe;color:#1d4ed8}
-.badge-credit{background:#fee2e2;color:#b91c1c}
-.amount{white-space:nowrap;font-weight:bold}
-.account-code{font-weight:bold}
-.account-name{color:#666;font-size:13px}
-.preview{background:#f9fafb;border:1px solid #e5e7eb;padding:15px;border-radius:10px;margin:5px 0 15px}
-.preview-title{font-weight:bold;margin-bottom:10px}
-.preview-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee}
-.preview-row:last-child{border-bottom:0}
-.debit{color:#1d4ed8;font-weight:bold}
-.credit{color:#b91c1c;font-weight:bold}
-@media(max-width:600px){header{padding:20px 15px}.card{padding:15px}.container{margin:15px auto}}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  color: #222;
+}
+
+header {
+  background: #222;
+  color: white;
+  padding: 25px 20px;
+}
+
+header h1 {
+  margin: 0 0 5px;
+}
+
+header p {
+  margin: 0;
+  color: #ddd;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 25px auto;
+  padding: 0 15px;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 15px;
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: bold;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 12px rgba(0,0,0,.08);
+}
+
+.active-box {
+  background: #ecfdf5;
+  border: 1px solid #86efac;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.active-box strong {
+  color: #166534;
+}
+
+.active-name {
+  display: block;
+  margin-top: 7px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.info {
+  color: #666;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+button {
+  border: 0;
+  padding: 11px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.btn-save {
+  background: #2563eb;
+  color: white;
+}
+
+.btn-edit {
+  background: #f59e0b;
+  color: white;
+}
+
+.btn-delete {
+  background: #dc2626;
+  color: white;
+}
+
+.btn-cancel {
+  background: #6b7280;
+  color: white;
+}
+
+.btn-active {
+  background: #16a34a;
+  color: white;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 850px;
+}
+
+th,
+td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: #f3f4f6;
+}
+
+.empty {
+  text-align: center;
+  color: #777;
+  padding: 25px;
+}
+
+.active {
+  color: #15803d;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 20px 15px;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .container {
+    margin: 15px auto;
+  }
+}
 </style>
 </head>
+
 <body>
+
 <header>
-<h1>🏢 Ilham ERP — Data Usaha</h1>
-<p>Kelola data usaha dan periode akuntansi</p>
+  <h1>🏢 Ilham ERP — Data Usaha</h1>
+  <p>Kelola data usaha dan periode akuntansi</p>
 </header>
+
 <div class="container">
-<a href="index.html" class="back">← Kembali ke Dashboard</a>
-<div class="active-box">
-<strong>🏢 Usaha Aktif</strong>
-<span class="active-name" id="activeBusiness">Belum ada usaha dipilih</span>
+
+  <a href="index.html" class="back">
+    ← Kembali ke Dashboard
+  </a>
+
+  <!-- USAHA AKTIF -->
+  <div class="active-box">
+    <strong>🏢 Usaha Aktif</strong>
+    <span class="active-name" id="activeBusiness">
+      Belum ada usaha dipilih
+    </span>
+  </div>
+
+  <!-- FORM USAHA -->
+  <div class="card">
+
+    <h2 id="formTitle">
+      ➕ Tambah Data Usaha
+    </h2>
+
+    <form id="businessForm">
+
+      <label for="businessName">
+        Nama Usaha
+      </label>
+
+      <input
+        type="text"
+        id="businessName"
+        required
+        placeholder="Contoh: PT Ilham Sejahtera"
+      >
+
+      <label for="businessAddress">
+        Alamat Usaha
+      </label>
+
+      <input
+        type="text"
+        id="businessAddress"
+        placeholder="Contoh: Jl. Contoh No. 10"
+      >
+
+      <label for="businessPeriod">
+        Periode / Tahun Buku
+      </label>
+
+      <input
+        type="number"
+        id="businessPeriod"
+        min="2000"
+        max="2100"
+        required
+        placeholder="2026"
+      >
+
+      <button
+        type="submit"
+        class="btn-save"
+        id="saveButton"
+      >
+        Simpan Usaha
+      </button>
+
+      <button
+        type="button"
+        class="btn-cancel"
+        id="cancelButton"
+        style="display:none"
+      >
+        Batal
+      </button>
+
+    </form>
+
+  </div>
+
+  <!-- DAFTAR USAHA -->
+  <div class="card">
+
+    <h2>📋 Daftar Usaha</h2>
+
+    <p class="info">
+      Setiap usaha memiliki COA dan transaksi masing-masing
+      berdasarkan <strong>businessId</strong>.
+    </p>
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama Usaha</th>
+            <th>Alamat</th>
+            <th>Periode</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+
+        <tbody id="businessTable">
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
 </div>
-<div class="card">
-<h2 id="formTitle">➕ Tambah Data Usaha</h2>
-<form id="businessForm">
-<label for="businessName">Nama Usaha</label>
-<input id="businessName" required placeholder="Contoh: PT Ilham Sejahtera">
-<label for="businessAddress">Alamat Usaha</label>
-<input id="businessAddress" placeholder="Contoh: Jl. Contoh No. 10">
-<label for="businessPeriod">Periode / Tahun Buku</label>
-<input type="number" id="businessPeriod" min="2000" max="2100" required placeholder="2026">
-<button class="btn-save" id="saveButton">Simpan Usaha</button>
-<button type="button" class="btn-cancel" id="cancelButton" style="display:none">Batal</button>
-</form>
-</div>
-<div class="card">
-<h2>📋 Daftar Usaha</h2>
-<p class="info">Setiap usaha memiliki COA dan transaksi masing-masing berdasarkan businessId.</p>
-<div class="table-wrapper">
-<table>
-<thead>
-<tr><th>No</th><th>Nama Usaha</th><th>Alamat</th><th>Periode</th><th>Status</th><th>Aksi</th></tr>
-</thead>
-<tbody id="businessTable"></tbody>
-</table>
-</div>
-</div>
-</div>
+
 <script>
-const BUSINESS_KEY="ilhamERP_businesses",ACTIVE_KEY="ilhamERP_activeBusiness";let editingId=null;
-function readArray(key){try{const v=JSON.parse(localStorage.getItem(key)||"[]");return Array.isArray(v)?v:[]}catch(e){console.error(e);return[]}}
-function getBusinesses(){return readArray(BUSINESS_KEY)}
-function saveBusinesses(v){localStorage.setItem(BUSINESS_KEY,JSON.stringify(v))}
-function idEqual(a,b){return String(a)===String(b)}
-function getActiveBusiness(){const businesses=getBusinesses();if(!businesses.length)return null;let id=localStorage.getItem(ACTIVE_KEY);let b=businesses.find(x=>idEqual(x.id,id));if(!b){b=businesses[0];localStorage.setItem(ACTIVE_KEY,String(b.id))}return b}
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
-function resetForm(){editingId=null;document.getElementById("businessForm").reset();document.getElementById("formTitle").textContent="➕ Tambah Data Usaha";document.getElementById("saveButton").textContent="Simpan Usaha";document.getElementById("cancelButton").style.display="none"}
-document.getElementById("businessForm").addEventListener("submit",e=>{e.preventDefault();const name=document.getElementById("businessName").value.trim(),address=document.getElementById("businessAddress").value.trim(),period=document.getElementById("businessPeriod").value.trim();if(!name||!period){alert("Nama usaha dan tahun buku wajib diisi.");return}const businesses=getBusinesses();if(editingId!==null){const i=businesses.findIndex(x=>idEqual(x.id,editingId));if(i<0){alert("Usaha tidak ditemukan.");return}businesses[i]={...businesses[i],name,address,period};saveBusinesses(businesses);alert("Data usaha berhasil diperbarui.")}else{const b={id:String(Date.now()),name,address,period,createdAt:new Date().toISOString()};businesses.push(b);saveBusinesses(businesses);localStorage.setItem(ACTIVE_KEY,b.id);alert("Usaha berhasil disimpan.")}resetForm();render()});
-function selectBusiness(id){if(!getBusinesses().some(x=>idEqual(x.id,id))){alert("Usaha tidak ditemukan.");return}localStorage.setItem(ACTIVE_KEY,String(id));render()}
-function editBusiness(id){const b=getBusinesses().find(x=>idEqual(x.id,id));if(!b)return;editingId=b.id;document.getElementById("businessName").value=b.name||"";document.getElementById("businessAddress").value=b.address||"";document.getElementById("businessPeriod").value=b.period||"";document.getElementById("formTitle").textContent="✏️ Edit Data Usaha";document.getElementById("saveButton").textContent="Update Usaha";document.getElementById("cancelButton").style.display="inline-block";scrollTo({top:0,behavior:"smooth"})}
-function deleteBusiness(id){const businesses=getBusinesses(),b=businesses.find(x=>idEqual(x.id,id));if(!b)return;if(!confirm(`Yakin ingin menghapus usaha "${b.name}"?\n\nData COA/transaksi usaha ini tidak otomatis dihapus agar tidak terjadi kehilangan data.`))return;const next=businesses.filter(x=>!idEqual(x.id,id));saveBusinesses(next);if(idEqual(localStorage.getItem(ACTIVE_KEY),id)){if(next.length)localStorage.setItem(ACTIVE_KEY,String(next[0].id));else localStorage.removeItem(ACTIVE_KEY)}render()}
-document.getElementById("cancelButton").addEventListener("click",resetForm);
-function render(){const businesses=getBusinesses(),active=getActiveBusiness(),table=document.getElementById("businessTable");document.getElementById("activeBusiness").textContent=active?`${active.name} — Tahun Buku ${active.period}`:"Belum ada usaha dipilih";table.innerHTML="";if(!businesses.length){table.innerHTML='<tr><td colspan="6" class="empty">Belum ada data usaha.</td></tr>';return}const activeId=active?.id;businesses.forEach((b,i)=>{const row=document.createElement("tr"),isActive=idEqual(b.id,activeId);row.innerHTML=`<td>${i+1}</td><td><strong>${esc(b.name)}</strong></td><td>${esc(b.address||"-")}</td><td>${esc(b.period)}</td><td>${isActive?'<span class="active">✓ Usaha Aktif</span>':'Tidak Aktif'}</td><td>${isActive?'':`<button class="btn-active" onclick="selectBusiness('${esc(b.id)}')">Pilih</button>`}<button class="btn-edit" onclick="editBusiness('${esc(b.id)}')">✏️ Edit</button><button class="btn-delete" onclick="deleteBusiness('${esc(b.id)}')">🗑️ Hapus</button></td>`;table.appendChild(row)})}
+
+/* =====================================================
+   STORAGE KEY
+===================================================== */
+
+const BUSINESS_KEY = "ilhamERP_businesses";
+const ACTIVE_KEY = "ilhamERP_activeBusiness";
+
+let editingId = null;
+
+
+/* =====================================================
+   STORAGE HELPER
+===================================================== */
+
+function readArray(key) {
+
+  try {
+
+    const raw = localStorage.getItem(key);
+
+    if (!raw) {
+      return [];
+    }
+
+    const data = JSON.parse(raw);
+
+    return Array.isArray(data) ? data : [];
+
+  } catch (error) {
+
+    console.error("Gagal membaca localStorage:", error);
+
+    return [];
+
+  }
+
+}
+
+
+/* =====================================================
+   BUSINESS DATA
+===================================================== */
+
+function getBusinesses() {
+
+  return readArray(BUSINESS_KEY);
+
+}
+
+
+function saveBusinesses(businesses) {
+
+  localStorage.setItem(
+    BUSINESS_KEY,
+    JSON.stringify(businesses)
+  );
+
+}
+
+
+/* =====================================================
+   ID COMPARISON
+   Menghindari masalah number vs string
+===================================================== */
+
+function idEqual(a, b) {
+
+  return String(a) === String(b);
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/* =====================================================
+   USAHA AKTIF
+===================================================== */
+
+function getActiveBusiness() {
+
+  const businesses = getBusinesses();
+
+  if (businesses.length === 0) {
+
+    localStorage.removeItem(ACTIVE_KEY);
+
+    return null;
+
+  }
+
+  const savedId =
+    localStorage.getItem(ACTIVE_KEY);
+
+  let active =
+    businesses.find(
+      business => idEqual(business.id, savedId)
+    );
+
+  /*
+    Jika activeBusiness tidak valid,
+    otomatis gunakan usaha pertama.
+  */
+
+  if (!active) {
+
+    active = businesses[0];
+
+    localStorage.setItem(
+      ACTIVE_KEY,
+      String(active.id)
+    );
+
+  }
+
+  return active;
+
+}
+
+
+/* =====================================================
+   RESET FORM
+===================================================== */
+
+function resetForm() {
+
+  editingId = null;
+
+  document
+    .getElementById("businessForm")
+    .reset();
+
+  document
+    .getElementById("formTitle")
+    .textContent =
+      "➕ Tambah Data Usaha";
+
+  document
+    .getElementById("saveButton")
+    .textContent =
+      "Simpan Usaha";
+
+  document
+    .getElementById("cancelButton")
+    .style.display =
+      "none";
+
+}
+
+
+/* =====================================================
+   SUBMIT FORM
+===================================================== */
+
+document
+  .getElementById("businessForm")
+  .addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const name =
+      document
+        .getElementById("businessName")
+        .value
+        .trim();
+
+    const address =
+      document
+        .getElementById("businessAddress")
+        .value
+        .trim();
+
+    const period =
+      document
+        .getElementById("businessPeriod")
+        .value
+        .trim();
+
+
+    if (!name || !period) {
+
+      alert(
+        "Nama usaha dan tahun buku wajib diisi."
+      );
+
+      return;
+
+    }
+
+
+    const businesses =
+      getBusinesses();
+
+
+    /* ===============================
+       MODE EDIT
+    =============================== */
+
+    if (editingId !== null) {
+
+      const index =
+        businesses.findIndex(
+          business =>
+            idEqual(
+              business.id,
+              editingId
+            )
+        );
+
+
+      if (index === -1) {
+
+        alert(
+          "Usaha tidak ditemukan."
+        );
+
+        return;
+
+      }
+
+
+      businesses[index] = {
+
+        ...businesses[index],
+
+        name: name,
+
+        address: address,
+
+        period: period
+
+      };
+
+
+      saveBusinesses(businesses);
+
+      alert(
+        "Data usaha berhasil diperbarui."
+      );
+
+    }
+
+
+    /* ===============================
+       MODE TAMBAH
+    =============================== */
+
+    else {
+
+      const newBusiness = {
+
+        id: String(Date.now()),
+
+        name: name,
+
+        address: address,
+
+        period: period,
+
+        createdAt:
+          new Date().toISOString()
+
+      };
+
+
+      businesses.push(newBusiness);
+
+      saveBusinesses(businesses);
+
+
+      /*
+        Usaha baru langsung menjadi
+        usaha aktif.
+      */
+
+      localStorage.setItem(
+        ACTIVE_KEY,
+        newBusiness.id
+      );
+
+
+      alert(
+        "Usaha berhasil disimpan dan menjadi usaha aktif."
+      );
+
+    }
+
+
+    resetForm();
+
+    render();
+
+  });
+
+
+/* =====================================================
+   PILIH USAHA
+===================================================== */
+
+function selectBusiness(id) {
+
+  const businesses =
+    getBusinesses();
+
+
+  const business =
+    businesses.find(
+      item =>
+        idEqual(item.id, id)
+    );
+
+
+  if (!business) {
+
+    alert(
+      "Usaha tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
+  localStorage.setItem(
+    ACTIVE_KEY,
+    String(business.id)
+  );
+
+
+  render();
+
+}
+
+
+/* =====================================================
+   EDIT USAHA
+===================================================== */
+
+function editBusiness(id) {
+
+  const businesses =
+    getBusinesses();
+
+
+  const business =
+    businesses.find(
+      item =>
+        idEqual(item.id, id)
+    );
+
+
+  if (!business) {
+
+    alert(
+      "Usaha tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
+  editingId =
+    business.id;
+
+
+  document
+    .getElementById("businessName")
+    .value =
+      business.name || "";
+
+
+  document
+    .getElementById("businessAddress")
+    .value =
+      business.address || "";
+
+
+  document
+    .getElementById("businessPeriod")
+    .value =
+      business.period || "";
+
+
+  document
+    .getElementById("formTitle")
+    .textContent =
+      "✏️ Edit Data Usaha";
+
+
+  document
+    .getElementById("saveButton")
+    .textContent =
+      "Update Usaha";
+
+
+  document
+    .getElementById("cancelButton")
+    .style.display =
+      "inline-block";
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+/* =====================================================
+   HAPUS USAHA
+===================================================== */
+
+function deleteBusiness(id) {
+
+  const businesses =
+    getBusinesses();
+
+
+  const business =
+    businesses.find(
+      item =>
+        idEqual(item.id, id)
+    );
+
+
+  if (!business) {
+
+    alert(
+      "Usaha tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
+  const confirmed =
+    confirm(
+      `Yakin ingin menghapus usaha "${business.name}"?\n\n` +
+      `Data COA dan transaksi usaha ini tidak otomatis dihapus.`
+    );
+
+
+  if (!confirmed) {
+
+    return;
+
+  }
+
+
+  const newBusinesses =
+    businesses.filter(
+      item =>
+        !idEqual(item.id, id)
+    );
+
+
+  saveBusinesses(newBusinesses);
+
+
+  const currentActiveId =
+    localStorage.getItem(ACTIVE_KEY);
+
+
+  /*
+    Jika usaha yang dihapus adalah
+    usaha aktif, pilih usaha lain.
+  */
+
+  if (
+    idEqual(
+      currentActiveId,
+      id
+    )
+  ) {
+
+    if (newBusinesses.length > 0) {
+
+      localStorage.setItem(
+        ACTIVE_KEY,
+        String(newBusinesses[0].id)
+      );
+
+    } else {
+
+      localStorage.removeItem(
+        ACTIVE_KEY
+      );
+
+    }
+
+  }
+
+
+  /*
+    Jika sedang edit usaha yang dihapus,
+    batalkan mode edit.
+  */
+
+  if (
+    editingId !== null &&
+    idEqual(editingId, id)
+  ) {
+
+    resetForm();
+
+  }
+
+
+  render();
+
+}
+
+
+/* =====================================================
+   CANCEL EDIT
+===================================================== */
+
+document
+  .getElementById("cancelButton")
+  .addEventListener(
+    "click",
+    resetForm
+  );
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function render() {
+
+  const businesses =
+    getBusinesses();
+
+
+  const active =
+    getActiveBusiness();
+
+
+  const activeElement =
+    document.getElementById(
+      "activeBusiness"
+    );
+
+
+  const table =
+    document.getElementById(
+      "businessTable"
+    );
+
+
+  /* ===============================
+     USAHA AKTIF
+  =============================== */
+
+  if (active) {
+
+    activeElement.textContent =
+      `${active.name} — Tahun Buku ${active.period}`;
+
+  } else {
+
+    activeElement.textContent =
+      "Belum ada usaha dipilih";
+
+  }
+
+
+  /* ===============================
+     CLEAR TABLE
+  =============================== */
+
+  table.innerHTML = "";
+
+
+  /* ===============================
+     EMPTY
+  =============================== */
+
+  if (businesses.length === 0) {
+
+    table.innerHTML = `
+      <tr>
+        <td
+          colspan="6"
+          class="empty"
+        >
+          Belum ada data usaha.
+        </td>
+      </tr>
+    `;
+
+    return;
+
+  }
+
+
+  const activeId =
+    active
+      ? active.id
+      : null;
+
+
+  /* ===============================
+     RENDER ROW
+  =============================== */
+
+  businesses.forEach(
+    (business, index) => {
+
+      const row =
+        document.createElement("tr");
+
+
+      const isActive =
+        idEqual(
+          business.id,
+          activeId
+        );
+
+
+      row.innerHTML = `
+
+        <td>
+          ${index + 1}
+        </td>
+
+        <td>
+          <strong>
+            ${escapeHTML(business.name)}
+          </strong>
+        </td>
+
+        <td>
+          ${escapeHTML(
+            business.address || "-"
+          )}
+        </td>
+
+        <td>
+          ${escapeHTML(
+            business.period || "-"
+          )}
+        </td>
+
+        <td>
+
+          ${
+            isActive
+              ? `<span class="active">
+                   ✓ Usaha Aktif
+                 </span>`
+              : `Tidak Aktif`
+          }
+
+        </td>
+
+        <td>
+
+          ${
+            isActive
+              ? ""
+              : `
+                <button
+                  class="btn-active"
+                  onclick="selectBusiness('${escapeHTML(business.id)}')"
+                >
+                  Pilih
+                </button>
+              `
+          }
+
+          <button
+            class="btn-edit"
+            onclick="editBusiness('${escapeHTML(business.id)}')"
+          >
+            ✏️ Edit
+          </button>
+
+          <button
+            class="btn-delete"
+            onclick="deleteBusiness('${escapeHTML(business.id)}')"
+          >
+            🗑️ Hapus
+          </button>
+
+        </td>
+
+      `;
+
+
+      table.appendChild(row);
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
 render();
+
 </script>
+
 </body>
-</html>
+  </html>
